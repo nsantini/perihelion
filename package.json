@@ -6,6 +6,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^1.1.7",
+    "@chakra-ui/react": "^1.8.6",
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
+    "framer-motion": "^6.2.8",
     "next": "latest",
     "pull-stream": "^3.6.14",
     "react": "17.0.2",
@@ -22,7 +27,8 @@
     "ssb-friends": "^5.1.1",
     "ssb-lan": "^1.2.3",
     "ssb-master": "^1.0.3",
-    "ssb-replication-scheduler": "^2.0.2"
+    "ssb-replication-scheduler": "^2.0.2",
+    "swr": "^1.2.2"
   },
   "name": "perihelion",
   "description": "This is an SSB app built with Next.js",
