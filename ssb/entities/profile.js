@@ -7,7 +7,7 @@ const getBlob = (ssb, blobId) => {
       bufferSource,
       pull.collect(async (err, bufferArray) => {
         if (err) {
-          await models.blob.want({ blobId });
+          await ssb.blobs.want(blobId);
           resolve(Buffer.alloc(0));
         } else {
           const buffer = Buffer.concat(bufferArray);
@@ -46,6 +46,7 @@ module.exports = async (ssb, feedId) => {
               resolve(null);
             } else {
               const image64 = await getBlob(ssb, message.value.content.image);
+              if (!message.value.content.name) console.log(message.value.content)
               resolve({
                 id: message.value.content.about,
                 name: message.value.content.name || feedId.slice(1, 1 + 8),

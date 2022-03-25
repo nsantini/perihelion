@@ -1,32 +1,18 @@
 import { Flex, SimpleGrid } from "@chakra-ui/react";
 import MessageCard from "../components/message";
-import ssbApi from "../ssb/api";
+import useFeed from "../hooks/feed"
 
-export default function Home({ profile }) {
+export default function Home({ posts }) {
+  const { feed, isLoading, isError } = useFeed();
+  if (isError) return <div>Failed to load</div>;
+  if (isLoading) return <div>Loading...</div>;
   return (
     <SimpleGrid columns={{ base: 1 }} width="100%">
-      {profile && (
-        <div>
-          <MessageCard
-            name={profile.name}
-            avatar={`data:image/png;base64,${Buffer.from(profile.image)}`}
-            content={profile.description}
-          />
-        </div>
-      )}
+      {feed.map((post, index) =>(
+        <Flex mt="2">
+          <MessageCard {...post} index={index} />
+        </Flex>
+      ))}
     </SimpleGrid>
   );
-}
-
-export async function getServerSideProps(context) {
-  try {
-    const profile = await ssbApi.getOwnProfile();
-    return {
-      props: { profile },
-    };
-  } catch (e) {
-    return {
-      props: { error: e },
-    };
-  }
 }

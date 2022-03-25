@@ -1,15 +1,12 @@
-import useSWR from "swr";
 import Head from "next/head";
 import NavBar from "./navbar";
 import { Flex } from "@chakra-ui/react";
-
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+import useProfile from "../hooks/profile"
 
 export default function Layout({ children }) {
-  const { data, error } = useSWR("/api/profile", fetcher);
-
-  if (error) return <div>Failed to load</div>;
-  if (!data) return <div>Loading...</div>;
+  const { profile, isLoading, isError } = useProfile();
+  if (isError) return <div>Failed to load</div>;
+  if (isLoading) return <div>Loading...</div>;
   return (
     <>
       <Head>
@@ -26,7 +23,7 @@ export default function Layout({ children }) {
         maxW={"820px"}
         mx={"auto"}
       >
-        <NavBar avatar={data.image || ""} />
+        <NavBar avatar={profile.image || ""} />
         <main>{children}</main>
       </Flex>
     </>
