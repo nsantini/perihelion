@@ -1,35 +1,20 @@
-import Head from "next/head";
-import ssbApi from "../ssb/api";
 import { Flex, SimpleGrid } from "@chakra-ui/react";
 import MessageCard from "../components/message";
-import NavBar from "../components/navbar";
+import ssbApi from "../ssb/api";
 
-export default function Home({ isConnected, profile, error }) {
+export default function Home({ profile }) {
   return (
-    <Flex
-      textAlign={"center"}
-      pt={1}
-      justifyContent={"center"}
-      direction={"column"}
-      width={"full"}
-    >
-      <Head>
-        <title>Perihelion</title>
-        <link rel="shortcut icon" href="/favicon.ico" />
-      </Head>
-      <SimpleGrid columns={{ base: 1 }} width="100%" maxW={"820px"} mx={"auto"}>
-        {profile && (
-          <div>
-            <NavBar avatar={profile.image} />
-            <MessageCard
-              name={profile.name}
-              avatar={`data:image/png;base64,${Buffer.from(profile.image)}`}
-              content={profile.description}
-            />
-          </div>
-        )}
-      </SimpleGrid>
-    </Flex>
+    <SimpleGrid columns={{ base: 1 }} width="100%">
+      {profile && (
+        <div>
+          <MessageCard
+            name={profile.name}
+            avatar={`data:image/png;base64,${Buffer.from(profile.image)}`}
+            content={profile.description}
+          />
+        </div>
+      )}
+    </SimpleGrid>
   );
 }
 
@@ -37,11 +22,11 @@ export async function getServerSideProps(context) {
   try {
     const profile = await ssbApi.getOwnProfile();
     return {
-      props: { isConnected: true, profile },
+      props: { profile },
     };
   } catch (e) {
     return {
-      props: { isConnected: false, error: true },
+      props: { error: e },
     };
   }
 }
