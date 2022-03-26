@@ -18,7 +18,7 @@ const getBlob = (ssb, blobId) => {
   });
 };
 
-module.exports = async (ssb, feedId) => {
+const getAboutField = async (ssb, key, feedId) => {
   const source = ssb.backlinks.read({
     reverse: true,
     query: [
@@ -37,26 +37,38 @@ module.exports = async (ssb, feedId) => {
     pull(
       source,
       pull.find(
-        (message) => message.value.content !== undefined,
-        async (err, message) => {
+        (message) => message && message.value && message.value.content && message.value.content[key] !== undefined,
+        (err, message) => {
           if (err) {
             reject(err);
           } else {
             if (message === null) {
-              resolve(null);
+              reject({ error: 'null message'});
             } else {
-              const image64 = await getBlob(ssb, message.value.content.image);
-              if (!message.value.content.name) console.log(message.value.content)
-              resolve({
-                id: message.value.content.about,
-                name: message.value.content.name || feedId.slice(1, 1 + 8),
-                description: message.value.content.description || "",
-                image: image64.toString("base64"),
-              });
+              resolve(message.value.content[key]);
             }
           }
         }
       )
     )
   );
+}
+
+module.exports = async (ssb, feedId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const name = await getAboutField(ssb, 'name', feedId);
+      const description = await getAboutField(ssb, 'description', feedId);
+      const imageRaw = await getAboutField(ssb, 'image', feedId);
+      const imageBuffer = await getBlob(ssb, imageRaw);
+      resolve({
+        id: feedId,
+        name: name || feedId.slice(1, 1 + 8),
+        description: description || '',
+        image: imageBuffer.toString("base64"),
+      });
+    } catch(err) {
+      reject(err)
+    }
+  });
 };

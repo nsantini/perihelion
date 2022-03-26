@@ -5,8 +5,13 @@ const profile = require("./entities/profile");
 module.exports = {
 
   getProfile: async (id) => {
-    const client = await ssbClientPromise();
-    return await profile(client, id==='self' ? client.id : id);
+    try {
+      const client = await ssbClientPromise();
+      return await profile(client, id==='self' ? client.id : id);
+    } catch(err) {
+      console.error('getProfile', err)
+      throw err;
+    }
   },
 
   getUsers: async () => {
@@ -19,7 +24,7 @@ module.exports = {
       };
       const drained = (err) => {
         if (err) {
-          console.error(err);
+          console.error('getUsers', err);
           return reject(err);
         }
         resolve(users);
@@ -48,7 +53,7 @@ module.exports = {
       };
       const drained = (err) => {
         if (err) {
-          console.error(err);
+          console.error('getPosts', err);
           return reject(err);
         }
         resolve(messages);

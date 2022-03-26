@@ -17,21 +17,25 @@ const connect = () => {
 
 module.exports = () => {
   return new Promise((resolve, reject) => {
-    if (global.clientHandle && global.clientHandle.closed === false) {
-      resolve(global.clientHandle);
-    } else {
-      ssbServerFactory();
-      setTimeout(() => {
-        connect()
-          .then((client) => {
-            global.clientHandle = client;
-            resolve(client);
-          })
-          .catch((e) => {
-            console.error(e);
-            reject(e);
-          });
-      }, 1000);
+    try {
+      if (global.clientHandle && global.clientHandle.closed === false) {
+        resolve(global.clientHandle);
+      } else {
+        ssbServerFactory();
+        setTimeout(() => {
+          connect()
+            .then((client) => {
+              global.clientHandle = client;
+              resolve(client);
+            })
+            .catch((e) => {
+              console.error('getClient', e);
+              reject(e);
+            });
+        }, 1000);
+      }
+    } catch(err) {
+      console.error('getClient', err)
     }
   });
 };

@@ -1,11 +1,33 @@
 import { Avatar, chakra, Flex, useColorModeValue } from "@chakra-ui/react";
 import useProfile from "../hooks/profile"
 
-export default function MessageCard(props) {
-  const { author, timestamp, text, index } = props;
+function Author({author}) {
   const { profile, isLoading, isError } = useProfile(author);
   if (isError) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
+  return(
+    <Flex
+        direction={"column"}
+        textAlign={"left"}
+        justifyContent={"space-between"}
+      >
+        <Avatar
+          src={`data:image/png;base64,${Buffer.from(profile.image || '')}`}
+          height={"80px"}
+          width={"80px"}
+          alignSelf={"left"}
+          m={{ base: "0 0 35px 0", md: "0 0 10px 0" }}
+        />
+        <chakra.p fontFamily={"Work Sans"} fontWeight={"bold"} fontSize={14}>
+          {profile.name}
+        </chakra.p>
+      </Flex>
+  )
+}
+
+export default function MessageCard(props) {
+  const { author, timestamp, text, index } = props;
+  
   return (
     <Flex
       boxShadow={"lg"}
@@ -17,23 +39,9 @@ export default function MessageCard(props) {
       justifyContent={"left"}
       position={"relative"}
       bg={useColorModeValue("white", "gray.800")}
+      key={index}
     >
-      <Flex
-        direction={"column"}
-        textAlign={"left"}
-        justifyContent={"space-between"}
-      >
-        <Avatar
-          src={`data:image/png;base64,${Buffer.from(profile.image)}`}
-          height={"80px"}
-          width={"80px"}
-          alignSelf={"left"}
-          m={{ base: "0 0 35px 0", md: "0 0 10px 0" }}
-        />
-        <chakra.p fontFamily={"Work Sans"} fontWeight={"bold"} fontSize={14}>
-          {profile.name}
-        </chakra.p>
-      </Flex>
+      <Author author={author} />
       <chakra.p
         fontFamily={"Inter"}
         fontWeight={"medium"}

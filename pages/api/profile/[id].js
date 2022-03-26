@@ -6,6 +6,6 @@ export default async function handler(req, res) {
     const profile = await ssbApi.getProfile(id);
     return res.status(200).json(profile);
   } catch (e) {
-    res.status(500).json({ error: e });
+    res.status(500).json(e);
   }
 }
