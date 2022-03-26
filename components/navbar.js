@@ -13,7 +13,7 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
 const Links = ["Profile", "Feed", "Settings"];
 
-const NavLink = ({ children }) => (
+const NavLink = ({ children, path }) => (
   <Link
     px={2}
     py={1}
@@ -22,7 +22,7 @@ const NavLink = ({ children }) => (
       textDecoration: "none",
       bg: useColorModeValue("gray.200", "gray.700"),
     }}
-    href={"#"}
+    href={`/${path}`}
   >
     {children}
   </Link>
@@ -45,14 +45,16 @@ export default function NavBar(props) {
         <HStack spacing={8} alignItems={"center"}>
           <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
             {Links.map((link) => (
-              <NavLink key={link}>{link}</NavLink>
+              <NavLink key={link} path={link.toLowerCase()}>
+                {link}
+              </NavLink>
             ))}
           </HStack>
         </HStack>
         <Flex alignItems={"center"}>
           <Avatar
             size={"sm"}
-            src={`data:image/png;base64,${Buffer.from(avatar)}`}
+            src={`data:image/png;base64,${Buffer.from(avatar || "")}`}
           />
         </Flex>
       </Flex>
