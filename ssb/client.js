@@ -29,13 +29,13 @@ module.exports = () => {
               resolve(client);
             })
             .catch((e) => {
-              console.error('getClient', e);
+              console.error("getClient", e);
               reject(e);
             });
         }, 1000);
       }
-    } catch(err) {
-      console.error('getClient', err)
+    } catch (err) {
+      console.error("getClient", err);
     }
   });
 };

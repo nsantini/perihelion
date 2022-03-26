@@ -37,13 +37,17 @@ const getAboutField = async (ssb, key, feedId) => {
     pull(
       source,
       pull.find(
-        (message) => message && message.value && message.value.content && message.value.content[key] !== undefined,
+        (message) =>
+          message &&
+          message.value &&
+          message.value.content &&
+          message.value.content[key] !== undefined,
         (err, message) => {
           if (err) {
             reject(err);
           } else {
             if (message === null) {
-              reject({ error: 'null message'});
+              reject({ error: "null message" });
             } else {
               resolve(message.value.content[key]);
             }
@@ -52,23 +56,23 @@ const getAboutField = async (ssb, key, feedId) => {
       )
     )
   );
-}
+};
 
 module.exports = async (ssb, feedId) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const name = await getAboutField(ssb, 'name', feedId);
-      const description = await getAboutField(ssb, 'description', feedId);
-      const imageRaw = await getAboutField(ssb, 'image', feedId);
+      const name = await getAboutField(ssb, "name", feedId);
+      const description = await getAboutField(ssb, "description", feedId);
+      const imageRaw = await getAboutField(ssb, "image", feedId);
       const imageBuffer = await getBlob(ssb, imageRaw);
       resolve({
         id: feedId,
         name: name || feedId.slice(1, 1 + 8),
-        description: description || '',
+        description: description || "",
         image: imageBuffer.toString("base64"),
       });
-    } catch(err) {
-      reject(err)
+    } catch (err) {
+      reject(err);
     }
   });
 };

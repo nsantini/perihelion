@@ -1,7 +1,7 @@
 import Head from "next/head";
 import NavBar from "./navbar";
 import { Flex } from "@chakra-ui/react";
-import useProfile from "../hooks/profile"
+import useProfile from "../hooks/profile";
 
 export default function Layout({ children }) {
   const { profile, isLoading, isError } = useProfile();
