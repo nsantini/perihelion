@@ -10,9 +10,9 @@ const processMsg = (msg) => {
   };
 };
 
-const transform = messagess => {
+const transform = (messagess) => {
   return messages.map(processMsg);
-}
+};
 
 module.exports = {
   getProfile: async (id) => {
@@ -44,8 +44,8 @@ module.exports = {
     });
   },
 
-  getLatestPosts: async() => {
-    console.log('getting latest posts')
+  getLatestPosts: async () => {
+    console.log("getting latest posts");
     const ssb = await ssbClientPromise();
     const maxMessages = 5;
 
@@ -72,10 +72,10 @@ module.exports = {
         pull.take(maxMessages),
         pull.collect((err, collectedMessages) => {
           if (err) {
-            console.error('get latests', err)
+            console.error("get latests", err);
             reject(err);
           } else {
-            console.log(collectedMessages)
+            console.log(collectedMessages);
             resolve(transform(collectedMessages));
           }
         })
@@ -84,7 +84,6 @@ module.exports = {
   },
 
   getPosts: async (cb) => {
-    
     const client = await ssbClientPromise();
     let count = 0;
     return new Promise((resolve, reject) => {

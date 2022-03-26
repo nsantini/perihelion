@@ -64,26 +64,26 @@ module.exports = async (ssb, feedId) => {
       let name, description, image;
       try {
         name = await getAboutField(ssb, "name", feedId);
-      } catch(e) {
-        console.log('Error getting name', e)
+      } catch (e) {
+        console.log("Error getting name", e);
       }
       try {
         description = await getAboutField(ssb, "description", feedId);
-      } catch(e) {
-        console.log('Error getting description', e)
+      } catch (e) {
+        console.log("Error getting description", e);
       }
       try {
         const imageRaw = await getAboutField(ssb, "image", feedId);
         const imageBuffer = await getBlob(ssb, imageRaw);
         image = imageBuffer.toString("base64");
-      } catch(e) {
-        console.log('Error getting image', e)
+      } catch (e) {
+        console.log("Error getting image", e);
       }
       resolve({
         id: feedId,
         name: name || feedId.slice(1, 1 + 8),
         description: description || "",
-        image: image || '',
+        image: image || "",
       });
     } catch (err) {
       reject(err);

@@ -8,11 +8,12 @@ export default function Home({ posts }) {
   if (isLoading) return <div>Loading...</div>;
   return (
     <SimpleGrid columns={{ base: 1 }} width="100%">
-      {feed && feed.map((post, index) => (
-        <Flex mt="2" key={index}>
-          <MessageCard {...post} index={index} />
-        </Flex>
-      ))}
+      {feed &&
+        feed.map((post, index) => (
+          <Flex mt="2" key={index}>
+            <MessageCard {...post} index={index} />
+          </Flex>
+        ))}
     </SimpleGrid>
   );
 }
