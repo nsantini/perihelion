@@ -61,15 +61,29 @@ const getAboutField = async (ssb, key, feedId) => {
 module.exports = async (ssb, feedId) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const name = await getAboutField(ssb, "name", feedId);
-      const description = await getAboutField(ssb, "description", feedId);
-      const imageRaw = await getAboutField(ssb, "image", feedId);
-      const imageBuffer = await getBlob(ssb, imageRaw);
+      let name, description, image;
+      try {
+        name = await getAboutField(ssb, "name", feedId);
+      } catch(e) {
+        console.log('Error getting name', e)
+      }
+      try {
+        description = await getAboutField(ssb, "description", feedId);
+      } catch(e) {
+        console.log('Error getting description', e)
+      }
+      try {
+        const imageRaw = await getAboutField(ssb, "image", feedId);
+        const imageBuffer = await getBlob(ssb, imageRaw);
+        image = imageBuffer.toString("base64");
+      } catch(e) {
+        console.log('Error getting image', e)
+      }
       resolve({
         id: feedId,
         name: name || feedId.slice(1, 1 + 8),
         description: description || "",
-        image: imageBuffer.toString("base64"),
+        image: image || '',
       });
     } catch (err) {
       reject(err);

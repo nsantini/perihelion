@@ -11,6 +11,7 @@ module.exports = () => {
       // Replication
       .use(require("ssb-ebt")) // needs: db2/compat
       .use(require("ssb-friends")) // needs: db2
+      .use(require("ssb-replicate"))
       .use(require("ssb-replication-scheduler")) // needs: friends, ebt
       .use(require("ssb-backlinks"))
       // Connections
