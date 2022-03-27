@@ -11,7 +11,24 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
-const Links = ["Profile", "Feed", "Settings"];
+const Links = [
+  {
+    label: 'Home',
+    path: '/'
+  },
+  {
+    label: 'My Posts',
+    path: '/feed/0'
+  },
+  {
+    label: 'My Circle',
+    path: '/feed/1'
+  },
+  {
+    label: 'Extended',
+    path: '/feed/2'
+  }
+];
 
 const NavLink = ({ children, path }) => (
   <Link
@@ -22,7 +39,7 @@ const NavLink = ({ children, path }) => (
       textDecoration: "none",
       bg: useColorModeValue("gray.200", "gray.700"),
     }}
-    href={`/${path}`}
+    href={`${path}`}
   >
     {children}
   </Link>
@@ -45,8 +62,8 @@ export default function NavBar(props) {
         <HStack spacing={8} alignItems={"center"}>
           <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
             {Links.map((link) => (
-              <NavLink key={link} path={link.toLowerCase()}>
-                {link}
+              <NavLink key={link.label} path={link.path}>
+                {link.label}
               </NavLink>
             ))}
           </HStack>
@@ -63,7 +80,9 @@ export default function NavBar(props) {
         <Box pb={4} display={{ md: "none" }}>
           <Stack as={"nav"} spacing={4}>
             {Links.map((link) => (
-              <NavLink key={link}>{link}</NavLink>
+              <NavLink key={link.label} path={link.path}>
+                {link.label}
+              </NavLink>
             ))}
           </Stack>
         </Box>

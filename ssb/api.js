@@ -10,9 +10,51 @@ const processMsg = (msg) => {
   };
 };
 
-const transform = (messagess) => {
-  return messages.map(processMsg);
+  /**
+   * Returns a function that filters messages based on who published the message.
+   */
+ const socialFilter = async (ssb, hops) => {
+  const { id } = ssb;
+  const relationshipObject = await new Promise((resolve, reject) => {
+    ssb.friends.graph((err, graph) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      }
+      resolve(graph[id] || {});
+    });
+  });
+
+  const followingList = Object.entries(relationshipObject)
+    .filter(([, val]) => val >= 0)
+    .map(([key]) => key);
+
+  const blockingList = Object.entries(relationshipObject)
+    .filter(([, val]) => val === -1)
+    .map(([key]) => key);
+
+  return pull.filter((message) => {
+    if (blockingList.includes(message.value.author)) {
+      return false;
+    }
+    if (message.value.author === id) {
+      return true;
+    } else if (hops === 1){
+      return followingList.includes(message.value.author);
+    } else if (hops > 1) {
+      return true;
+    }
+  });
 };
+
+const isPost = () => {
+  return pull.filter((message) => 
+    message &&
+    message.value &&
+    message.value.content &&
+    (message.value.content.type === "post" || message.value.content.type === "blog")
+  );
+}
 
 module.exports = {
   getProfile: async (id) => {
@@ -44,66 +86,24 @@ module.exports = {
     });
   },
 
-  getLatestPosts: async () => {
-    console.log("getting latest posts");
-    const ssb = await ssbClientPromise();
-    const maxMessages = 5;
-
-    const source = ssb.query.read(
-      configure({
-        query: [
-          {
-            $filter: {
-              value: {
-                timestamp: { $lte: Date.now() },
-                content: {
-                  type: { $in: ["post", "blog"] },
-                },
-              },
-            },
-          },
-        ],
-      })
-    );
-
+  getPosts: async (hops) => {
+    const maxMessages = 50;
+    const client = await ssbClientPromise();
+    const followingFilter = await socialFilter(client, hops);
     return new Promise((resolve, reject) => {
       pull(
-        source,
+        client.createFeedStream({ live: false, reverse: true }),
+        followingFilter,
+        isPost(),
         pull.take(maxMessages),
         pull.collect((err, collectedMessages) => {
           if (err) {
-            console.error("get latests", err);
+            console.error("get latests posts", err);
             reject(err);
           } else {
-            console.log(collectedMessages);
-            resolve(transform(collectedMessages));
+            resolve(collectedMessages.map(processMsg));
           }
         })
-      );
-    });
-  },
-
-  getPosts: async (cb) => {
-    const client = await ssbClientPromise();
-    let count = 0;
-    return new Promise((resolve, reject) => {
-      const messages = [];
-      const collector = (msg) => {
-        if (!msg.value || msg.value.content.type !== "post") return;
-        messages.push(processMsg(msg));
-        if (count === 20) resolve(messages);
-        count++;
-      };
-      const drained = (err) => {
-        if (err) {
-          console.error("getPosts", err);
-          return reject(err);
-        }
-        resolve(messages);
-      };
-      pull(
-        client.createFeedStream({ live: false, reverse: true }),
-        pull.drain(collector, drained)
       );
     });
   },
