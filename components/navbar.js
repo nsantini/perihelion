@@ -13,21 +13,21 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
 const Links = [
   {
-    label: 'Home',
-    path: '/'
+    label: "Home",
+    path: "/",
   },
   {
-    label: 'My Posts',
-    path: '/feed/0'
+    label: "My Posts",
+    path: "/feed/0",
   },
   {
-    label: 'My Circle',
-    path: '/feed/1'
+    label: "My Circle",
+    path: "/feed/1",
   },
   {
-    label: 'Extended',
-    path: '/feed/2'
-  }
+    label: "Extended",
+    path: "/feed/2",
+  },
 ];
 
 const NavLink = ({ children, path }) => (

@@ -10,10 +10,10 @@ const processMsg = (msg) => {
   };
 };
 
-  /**
-   * Returns a function that filters messages based on who published the message.
-   */
- const socialFilter = async (ssb, hops) => {
+/**
+ * Returns a function that filters messages based on who published the message.
+ */
+const socialFilter = async (ssb, hops) => {
   const { id } = ssb;
   const relationshipObject = await new Promise((resolve, reject) => {
     ssb.friends.graph((err, graph) => {
@@ -39,7 +39,7 @@ const processMsg = (msg) => {
     }
     if (message.value.author === id) {
       return true;
-    } else if (hops === 1){
+    } else if (hops === 1) {
       return followingList.includes(message.value.author);
     } else if (hops > 1) {
       return true;
@@ -48,13 +48,15 @@ const processMsg = (msg) => {
 };
 
 const isPost = () => {
-  return pull.filter((message) => 
-    message &&
-    message.value &&
-    message.value.content &&
-    (message.value.content.type === "post" || message.value.content.type === "blog")
+  return pull.filter(
+    (message) =>
+      message &&
+      message.value &&
+      message.value.content &&
+      (message.value.content.type === "post" ||
+        message.value.content.type === "blog")
   );
-}
+};
 
 module.exports = {
   getProfile: async (id) => {
