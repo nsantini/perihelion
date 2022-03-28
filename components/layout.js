@@ -20,7 +20,7 @@ export default function Layout({ children }) {
         justifyContent={"center"}
         direction={"column"}
         width={"full"}
-        maxW={"820px"}
+        maxW={"1080px"}
         mx={"auto"}
       >
         <NavBar avatar={profile.image || ""} />
