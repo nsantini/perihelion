@@ -1,4 +1,4 @@
-import { Avatar, chakra, Flex, useColorModeValue } from "@chakra-ui/react";
+import { Avatar, chakra, Flex } from "@chakra-ui/react";
 import useProfile from "../hooks/profile";
 import ssbMarkdown from "ssb-markdown";
 
@@ -32,17 +32,14 @@ export default function MessageCard(props) {
 
   return (
     <Flex
-      boxShadow={"lg"}
+      key={index}
       width="100%"
       direction={"column"}
-      width={"full"}
       rounded={"xl"}
       p={5}
       justifyContent={"left"}
       position={"relative"}
       textAlign={"left"}
-      bg={useColorModeValue("white", "gray.800")}
-      key={index}
     >
       <Author author={author} timestamp={timestamp} />
       <chakra.p

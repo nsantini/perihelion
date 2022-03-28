@@ -18,63 +18,26 @@ const getBlob = (ssb, blobId) => {
   });
 };
 
-const getAboutField = async (ssb, key, feedId) => {
-  const source = ssb.backlinks.read({
-    reverse: true,
-    query: [
-      {
-        $filter: {
-          dest: feedId,
-          value: {
-            author: feedId,
-            content: { type: "about", about: feedId },
-          },
-        },
-      },
-    ],
+const getProfile = async (ssb, feedId) => {
+  return new Promise((resolve, reject) => {
+    ssb.db.onDrain("aboutSelf", () => {
+      try {
+        const profile = ssb.db.getIndex("aboutSelf").getProfile(feedId);
+        resolve(profile);
+      } catch (err) {
+        console.error(err);
+        reject(err);
+      }
+    });
   });
-  return new Promise((resolve, reject) =>
-    pull(
-      source,
-      pull.find(
-        (message) =>
-          message &&
-          message.value &&
-          message.value.content &&
-          message.value.content[key] !== undefined,
-        (err, message) => {
-          if (err) {
-            reject(err);
-          } else {
-            if (message === null) {
-              reject({ error: "null message" });
-            } else {
-              resolve(message.value.content[key]);
-            }
-          }
-        }
-      )
-    )
-  );
 };
 
 module.exports = async (ssb, feedId) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let name, description, image;
+      let { name, description, image } = await getProfile(ssb, feedId);
       try {
-        name = await getAboutField(ssb, "name", feedId);
-      } catch (e) {
-        console.log("Error getting name", e);
-      }
-      try {
-        description = await getAboutField(ssb, "description", feedId);
-      } catch (e) {
-        console.log("Error getting description", e);
-      }
-      try {
-        const imageRaw = await getAboutField(ssb, "image", feedId);
-        const imageBuffer = await getBlob(ssb, imageRaw);
+        const imageBuffer = await getBlob(ssb, image);
         image = imageBuffer.toString("base64");
       } catch (e) {
         console.log("Error getting image", e);
