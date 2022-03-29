@@ -5,8 +5,7 @@ export default async function handler(req, res) {
     const { hops } = req.query;
     const threads = await ssbApi.getThreads(parseInt(hops));
     return res.status(200).json(threads);
-  } catch (e) {
-    console.error("Feed API", e);
-    res.status(500).json({ error: e });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
   }
 }

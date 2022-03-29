@@ -2,15 +2,20 @@ import { useRouter } from "next/router";
 import { Flex, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import MessageCard from "../../components/message";
 import useFeed from "../../hooks/feed";
+import Post from "../../components/post";
 
 export default function Feed() {
   const router = useRouter();
+
   const { hops } = router.query;
   const { feed, isLoading, isError } = useFeed(hops);
+
   if (isError) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
+
   return (
     <SimpleGrid columns={{ base: 1 }} width="100%">
+      <Post />
       {feed &&
         feed.map &&
         feed.map((thread, idx) => (
