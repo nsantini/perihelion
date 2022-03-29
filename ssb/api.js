@@ -1,6 +1,7 @@
 const ssbFactory = require("./server");
 const profile = require("./entities/profile");
 const feed = require("./entities/feed");
+const post = require("./entities/post");
 
 module.exports = {
   getProfile: async (id) => {
@@ -19,6 +20,16 @@ module.exports = {
       return await feed(ssb, hops);
     } catch (err) {
       console.error("getThreads", err);
+      throw err;
+    }
+  },
+
+  postMessage: async (content) => {
+    try {
+      const ssb = ssbFactory();
+      return await post(ssb, content);
+    } catch (err) {
+      console.error("postMessage", err);
       throw err;
     }
   },
