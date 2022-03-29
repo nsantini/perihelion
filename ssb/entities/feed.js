@@ -3,6 +3,7 @@ const { type, descending } = require("ssb-db2/operators");
 
 const processMsg = (msg) => {
   return {
+    key: msg.key,
     author: msg.value.author,
     timestamp: msg.value.timestamp,
     text: msg.value.content.text,

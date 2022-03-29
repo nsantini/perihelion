@@ -1,4 +1,4 @@
-module.exports = async (ssb, text) => {
+module.exports = async (ssb, message) => {
   return new Promise(async (resolve, reject) => {
     try {
       ssb.db.publish(
@@ -6,7 +6,7 @@ module.exports = async (ssb, text) => {
           timestamp: Date.now(),
           author: ssb.id,
           type: "post",
-          text,
+          ...message
         },
         (err, kvt) => {
           if (err) {

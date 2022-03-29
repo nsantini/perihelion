@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { Flex, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import MessageCard from "../../components/message";
-import useFeed from "../../hooks/feed";
 import Post from "../../components/post";
+import useFeed from "../../hooks/feed";
 
 export default function Feed() {
   const router = useRouter();
@@ -30,6 +30,7 @@ export default function Feed() {
             {thread.messages.map((post, index) => (
               <MessageCard {...post} index={index} />
             ))}
+            <Post root={thread.messages[0].key} />
           </Flex>
         ))}
     </SimpleGrid>

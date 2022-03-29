@@ -24,10 +24,10 @@ module.exports = {
     }
   },
 
-  postMessage: async (content) => {
+  postMessage: async (message) => {
     try {
       const ssb = ssbFactory();
-      return await post(ssb, content);
+      return await post(ssb, message);
     } catch (err) {
       console.error("postMessage", err);
       throw err;
