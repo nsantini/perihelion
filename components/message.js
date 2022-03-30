@@ -1,4 +1,4 @@
-import { Avatar, chakra, Flex } from "@chakra-ui/react";
+import { Avatar, chakra, Flex, Link } from "@chakra-ui/react";
 import useProfile from "../hooks/profile";
 import ssbMarkdown from "ssb-markdown";
 
@@ -16,9 +16,14 @@ function Author({ author, timestamp }) {
         m={{ base: "0 0 35px 0", md: "0 0 10px 0" }}
       />
       <Flex direction={"column"} textAlign={"left"} ml="2">
-        <chakra.p fontFamily={"Work Sans"} fontWeight={"bold"} fontSize={16}>
+        <Link
+          fontFamily={"Work Sans"}
+          fontWeight={"bold"}
+          fontSize={16}
+          href={`/profile/${encodeURIComponent(profile.id)}`}
+        >
           {profile.name}
-        </chakra.p>
+        </Link>
         <chakra.p fontFamily={"Work Sans"} fontSize={12}>
           {postedDate.toLocaleDateString()} — {postedDate.toLocaleTimeString()}
         </chakra.p>

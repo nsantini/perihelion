@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
-export default function Post({root}) {
+export default function Post({ root }) {
   const [postError, setPostError] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { handleSubmit, register, errors, reset } = useForm();
@@ -53,7 +53,7 @@ export default function Post({root}) {
             placeholder="Write your message here"
             {...register("text", { required: true })}
           />
-          
+
           {postError && (
             <Text color="tomato" mt="2">
               {postError}
@@ -67,12 +67,11 @@ export default function Post({root}) {
       )}
       {!isOpen && root && (
         <form>
-        <Button colorScheme="teal" mt="2" onClick={isOpen ? onClose : onOpen}>
-          Reply to thread
-        </Button>
+          <Button colorScheme="teal" mt="2" onClick={isOpen ? onClose : onOpen}>
+            Reply to thread
+          </Button>
         </form>
       )}
-      
     </Flex>
   );
 }

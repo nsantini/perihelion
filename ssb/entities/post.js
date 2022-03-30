@@ -6,7 +6,7 @@ module.exports = async (ssb, message) => {
           timestamp: Date.now(),
           author: ssb.id,
           type: "post",
-          ...message
+          ...message,
         },
         (err, kvt) => {
           if (err) {

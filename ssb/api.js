@@ -7,7 +7,17 @@ module.exports = {
   getProfile: async (id) => {
     try {
       const ssb = ssbFactory();
-      return await profile(ssb, id === "self" ? ssb.id : id);
+      return await profile.getProfile(ssb, id === "self" ? ssb.id : id);
+    } catch (err) {
+      console.error("getProfile", err);
+      throw err;
+    }
+  },
+
+  updateProfile: async (updates) => {
+    try {
+      const ssb = ssbFactory();
+      return await profile.updateProfile(ssb, updates);
     } catch (err) {
       console.error("getProfile", err);
       throw err;

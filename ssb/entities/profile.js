@@ -32,24 +32,49 @@ const getProfile = async (ssb, feedId) => {
   });
 };
 
-module.exports = async (ssb, feedId) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let { name, description, image } = await getProfile(ssb, feedId);
+module.exports = {
+  getProfile: async (ssb, feedId) => {
+    return new Promise(async (resolve, reject) => {
       try {
-        const imageBuffer = await getBlob(ssb, image);
-        image = imageBuffer.toString("base64");
-      } catch (e) {
-        console.log("Error getting image", e);
+        let { name, description, image } = await getProfile(ssb, feedId);
+        try {
+          if (image) {
+            const imageBuffer = await getBlob(ssb, image);
+            image = imageBuffer.toString("base64");
+          }
+        } catch (e) {
+          console.log("Error getting image", e);
+        }
+        resolve({
+          id: feedId,
+          name: name || feedId.slice(1, 1 + 8),
+          description: description || "",
+          image: image || "",
+        });
+      } catch (err) {
+        reject(err);
       }
-      resolve({
-        id: feedId,
-        name: name || feedId.slice(1, 1 + 8),
-        description: description || "",
-        image: image || "",
-      });
-    } catch (err) {
-      reject(err);
-    }
-  });
+    });
+  },
+  updateProfile: async (ssb, profile) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        ssb.db.publish(
+          {
+            about: ssb.id,
+            type: "about",
+            ...profile,
+          },
+          (err, kvt) => {
+            if (err) {
+              return reject(err);
+            }
+            resolve(kvt);
+          }
+        );
+      } catch (err) {
+        reject(err);
+      }
+    });
+  },
 };

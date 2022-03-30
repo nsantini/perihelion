@@ -28,6 +28,10 @@ const Links = [
     label: "Extended",
     path: "/feed/2",
   },
+  {
+    label: "Profile",
+    path: "/profile/self",
+  },
 ];
 
 const NavLink = ({ children, path }) => (

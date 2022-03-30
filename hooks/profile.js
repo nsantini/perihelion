@@ -1,9 +1,9 @@
 import useSWR from "swr";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function useProfile(id) {
+export default function useProfile(feedId) {
   const { data, error } = useSWR(
-    `/api/profile/${id ? encodeURIComponent(id) : "self"}`,
+    `/api/profile/${feedId ? encodeURIComponent(feedId) : "self"}`,
     fetcher
   );
 
