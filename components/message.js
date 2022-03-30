@@ -48,6 +48,7 @@ export default function MessageCard(props) {
     >
       <Author author={author} timestamp={timestamp} />
       <chakra.p
+        overflowX={"scroll"}
         fontFamily={"Inter"}
         fontWeight={"medium"}
         fontSize={"15px"}
