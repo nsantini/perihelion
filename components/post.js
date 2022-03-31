@@ -1,13 +1,14 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import {
-  Button,
   Flex,
   Text,
-  Textarea,
+  Link,
   useDisclosure,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import Button from "./button";
+import Textarea from "./textarea";
 
 export default function Post({ root }) {
   const [postError, setPostError] = useState("");
@@ -43,7 +44,7 @@ export default function Post({ root }) {
       boxShadow={"lg"}
       justifyContent={"left"}
       position={"relative"}
-      textAlign={"left"}
+      textAlign={"center"}
       bg={useColorModeValue("white", "gray.800")}
     >
       {(isOpen || !root) && (
@@ -51,7 +52,9 @@ export default function Post({ root }) {
           <Textarea
             name="text"
             placeholder="Write your message here"
-            {...register("text", { required: true })}
+            register={register}
+            registerName="text"
+            registerProps={{ required: true }}
           />
 
           {postError && (
@@ -60,17 +63,13 @@ export default function Post({ root }) {
             </Text>
           )}
 
-          <Button colorScheme="blue" type="submit" mt="2">
-            Post message
-          </Button>
+          <Button>Post message</Button>
         </form>
       )}
       {!isOpen && root && (
-        <form>
-          <Button colorScheme="teal" mt="2" onClick={isOpen ? onClose : onOpen}>
-            Reply to thread
-          </Button>
-        </form>
+        <Link color="frost.100" mt="2" onClick={isOpen ? onClose : onOpen}>
+          Reply to thread
+        </Link>
       )}
     </Flex>
   );

@@ -1,6 +1,15 @@
 import { useState } from "react";
-import { Avatar, Textarea, Text, Input, Flex, Button } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import {
+  Avatar,
+  Box,
+  Center,
+  Text,
+  useColorModeValue,
+  Input,
+} from "@chakra-ui/react";
+import Button from "./button";
+import Textarea from "./textarea";
 
 export default function ProfileForm({ profile }) {
   const [postError, setPostError] = useState("");
@@ -21,45 +30,60 @@ export default function ProfileForm({ profile }) {
   };
 
   return (
-    <Flex
-      width="100%"
-      direction={"column"}
-      rounded={"xl"}
-      p={5}
-      justifyContent={"left"}
-      position={"relative"}
-      textAlign={"left"}
-    >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Flex direction={"row"} textAlign={"left"}>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Center py={6}>
+        <Box
+          w={"full"}
+          bg={useColorModeValue("white", "gray.900")}
+          boxShadow={"2xl"}
+          rounded={"lg"}
+          p={6}
+          textAlign={"center"}
+        >
           <Avatar
+            size={"xl"}
             src={`data:image/png;base64,${Buffer.from(profile.image || "")}`}
-            size={"md"}
-            alignSelf={"left"}
-            m={{ base: "0 0 35px 0", md: "0 0 10px 0" }}
+            alt={"Avatar Alt"}
+            mb={4}
+            pos={"relative"}
+            _after={{
+              content: '""',
+              w: 4,
+              h: 4,
+              bg: "green.300",
+              border: "2px solid white",
+              rounded: "full",
+              pos: "absolute",
+              bottom: 0,
+              right: 3,
+            }}
           />
-          <Flex direction={"column"} textAlign={"left"} ml="2">
-            <Input name="name" {...register("name", { value: profile.name })} />
-          </Flex>
-        </Flex>
-        <Textarea
-          name="description"
-          {...register("description", { value: profile.description })}
-        />
-        {postError && (
-          <Text color="tomato" mt="2">
-            {postError}
-          </Text>
-        )}
-        {isSuccessfullySubmitted && (
-          <Text mt="2" color="green">
-            Profile updated!
-          </Text>
-        )}
-        <Button colorScheme="blue" mt="2" type="submit">
-          Submit changes
-        </Button>
-      </form>
-    </Flex>
+          <Input
+            fontSize={"2xl"}
+            fontFamily={"body"}
+            name="name"
+            {...register("name", { value: profile.name })}
+          />
+          <Textarea
+            name="description"
+            register={register}
+            registerName="description"
+            registerProps={{ value: profile.description }}
+          />
+
+          {postError && (
+            <Text color="tomato" mt="2">
+              {postError}
+            </Text>
+          )}
+          {isSuccessfullySubmitted && (
+            <Text mt="2" color="green">
+              Profile updated!
+            </Text>
+          )}
+          <Button>Submit changes</Button>
+        </Box>
+      </Center>
+    </form>
   );
 }
