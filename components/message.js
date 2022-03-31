@@ -1,6 +1,5 @@
 import { Avatar, chakra, Flex, Link } from "@chakra-ui/react";
 import useProfile from "../hooks/profile";
-import ssbMarkdown from "ssb-markdown";
 import Content from "./content";
 
 function Author({ author, timestamp }) {

@@ -1,16 +1,13 @@
-import { Button as ChakraButton } from "@chakra-ui/react";
+import { Button as ChakraButton, useColorModeValue } from "@chakra-ui/react";
 
 export default function Button({ children }) {
   return (
     <ChakraButton
       w={"full"}
       maxW={"320px"}
-      colorScheme="frost"
+      bgColor={useColorModeValue("frost.700", "frost.500")}
+      color={useColorModeValue("snow.500", "snow.500")}
       rounded={"md"}
-      _hover={{
-        transform: "translateY(-2px)",
-        boxShadow: "lg",
-      }}
       type="submit"
       mt={2}
     >

@@ -1,10 +1,4 @@
-import {
-  Heading,
-  Box,
-  Center,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Heading, Box, Center, useColorModeValue } from "@chakra-ui/react";
 import Button from "./button";
 import Avatar from "./avatar";
 import Content from "./content";

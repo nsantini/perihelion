@@ -67,7 +67,11 @@ export default function Post({ root }) {
         </form>
       )}
       {!isOpen && root && (
-        <Link color="frost.100" mt="2" onClick={isOpen ? onClose : onOpen}>
+        <Link
+          color={useColorModeValue("frost.700", "frost.500")}
+          mt="2"
+          onClick={isOpen ? onClose : onOpen}
+        >
           Reply to thread
         </Link>
       )}
