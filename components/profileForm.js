@@ -1,15 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  Avatar,
-  Box,
-  Center,
-  Text,
-  useColorModeValue,
-  Input,
-} from "@chakra-ui/react";
+import { Box, Center, Text, useColorModeValue, Input } from "@chakra-ui/react";
 import Button from "./button";
 import Textarea from "./textarea";
+import Avatar from "./avatar";
 
 export default function ProfileForm({ profile }) {
   const [postError, setPostError] = useState("");
@@ -40,24 +34,7 @@ export default function ProfileForm({ profile }) {
           p={6}
           textAlign={"center"}
         >
-          <Avatar
-            size={"xl"}
-            src={`data:image/png;base64,${Buffer.from(profile.image || "")}`}
-            alt={"Avatar Alt"}
-            mb={4}
-            pos={"relative"}
-            _after={{
-              content: '""',
-              w: 4,
-              h: 4,
-              bg: "green.300",
-              border: "2px solid white",
-              rounded: "full",
-              pos: "absolute",
-              bottom: 0,
-              right: 3,
-            }}
-          />
+          <Avatar image={profile.image} />
           <Input
             fontSize={"2xl"}
             fontFamily={"body"}

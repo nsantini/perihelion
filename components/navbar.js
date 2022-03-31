@@ -1,7 +1,6 @@
 import {
   Box,
   Flex,
-  Avatar,
   HStack,
   Link,
   IconButton,
@@ -10,6 +9,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import Avatar from "./avatar";
 
 const Links = [
   {
@@ -50,8 +50,7 @@ const NavLink = ({ children, path }) => (
   </Link>
 );
 
-export default function NavBar(props) {
-  const { avatar } = props;
+export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -73,12 +72,6 @@ export default function NavBar(props) {
             ))}
           </HStack>
         </HStack>
-        <Flex alignItems={"center"}>
-          <Avatar
-            size={"sm"}
-            src={`data:image/png;base64,${Buffer.from(avatar || "")}`}
-          />
-        </Flex>
       </Flex>
 
       {isOpen ? (

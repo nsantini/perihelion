@@ -1,12 +1,8 @@
 import Head from "next/head";
 import NavBar from "./navbar";
 import { Flex } from "@chakra-ui/react";
-import useProfile from "../hooks/profile";
 
 export default function Layout({ children }) {
-  const { profile, isLoading, isError } = useProfile();
-  if (isError) return <div>Failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
   return (
     <>
       <Head>
@@ -23,7 +19,7 @@ export default function Layout({ children }) {
         maxW={"1080px"}
         mx={"auto"}
       >
-        <NavBar avatar={profile.image || ""} />
+        <NavBar />
         <main>{children}</main>
       </Flex>
     </>
