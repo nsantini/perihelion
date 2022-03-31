@@ -1,6 +1,7 @@
 import { Avatar, chakra, Flex, Link } from "@chakra-ui/react";
 import useProfile from "../hooks/profile";
 import ssbMarkdown from "ssb-markdown";
+import Content from "./content";
 
 function Author({ author, timestamp }) {
   const { profile, isLoading, isError } = useProfile(author);
@@ -47,14 +48,7 @@ export default function MessageCard(props) {
       textAlign={"left"}
     >
       <Author author={author} timestamp={timestamp} />
-      <chakra.p
-        overflowX={"scroll"}
-        fontFamily={"Inter"}
-        fontWeight={"medium"}
-        fontSize={"15px"}
-        pl={4}
-        dangerouslySetInnerHTML={{ __html: ssbMarkdown.block(text) }}
-      />
+      <Content text={text} />
     </Flex>
   );
 }

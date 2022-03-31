@@ -7,6 +7,7 @@ import {
 } from "@chakra-ui/react";
 import Button from "./button";
 import Avatar from "./avatar";
+import Content from "./content";
 
 export default function Profile({ profile }) {
   return (
@@ -23,13 +24,7 @@ export default function Profile({ profile }) {
         <Heading fontSize={"2xl"} fontFamily={"body"}>
           {profile.name}
         </Heading>
-        <Text
-          textAlign={"left"}
-          color={useColorModeValue("gray.700", "gray.400")}
-          px={3}
-        >
-          {profile.description}
-        </Text>
+        <Content text={profile.description} />
 
         <Button>Follow</Button>
       </Box>

@@ -5,11 +5,22 @@ import {
   Link,
   IconButton,
   useDisclosure,
+  useColorMode,
   useColorModeValue,
   Stack,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import Avatar from "./avatar";
+import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+
+function ThemeToggleButton() {
+  const { colorMode, toggleColorMode } = useColorMode();
+  return (
+    <IconButton
+      aria-label="Search database"
+      icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+      onClick={toggleColorMode}
+    />
+  );
+}
 
 const Links = [
   {
@@ -72,6 +83,7 @@ export default function NavBar() {
             ))}
           </HStack>
         </HStack>
+        <ThemeToggleButton />
       </Flex>
 
       {isOpen ? (
