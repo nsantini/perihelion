@@ -25,7 +25,7 @@ export default function Feed() {
             width="100%"
             direction={"column"}
             boxShadow={"lg"}
-            bg={useColorModeValue("white", "gray.800")}
+            bg={useColorModeValue("grey.50", "polar.100")}
           >
             {thread.messages.map((post, index) => (
               <MessageCard {...post} index={index} />

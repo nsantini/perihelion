@@ -45,7 +45,7 @@ export default function Post({ root }) {
       justifyContent={"left"}
       position={"relative"}
       textAlign={"center"}
-      bg={useColorModeValue("white", "gray.800")}
+      bg={useColorModeValue("grey.50", "polar.100")}
     >
       {(isOpen || !root) && (
         <form onSubmit={handleSubmit(onSubmit)}>
