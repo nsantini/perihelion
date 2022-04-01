@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import Profile from "../../components/profile";
-import ProfileForm from "../../components/profileForm";
+import Profile from "../../components/organisms/profile";
+import ProfileForm from "../../components/organisms/profileForm";
 import useProfile from "../../hooks/profile";
 
 export default function ProfilePage() {

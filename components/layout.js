@@ -1,6 +1,6 @@
 import Head from "next/head";
-import NavBar from "./navbar";
-import { Flex } from "@chakra-ui/react";
+import NavBar from "./organisms/navbar";
+import { Box, Container, Stack } from "@chakra-ui/react";
 
 export default function Layout({ children }) {
   return (
@@ -10,18 +10,12 @@ export default function Layout({ children }) {
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
 
-      <Flex
-        textAlign={"center"}
-        pt={1}
-        justifyContent={"center"}
-        direction={"column"}
-        width={"full"}
-        maxW={"1080px"}
-        mx={"auto"}
-      >
-        <NavBar />
-        <main>{children}</main>
-      </Flex>
+      <Container maxW={"container.lg"} width={"full"}>
+        <Stack>
+          <NavBar />
+          <main>{children}</main>
+        </Stack>
+      </Container>
     </>
   );
 }

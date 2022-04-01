@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Box, Center, Text, useColorModeValue, Input } from "@chakra-ui/react";
-import Button from "./button";
-import Textarea from "./textarea";
-import Avatar from "./avatar";
+import { Center, Text, Input } from "@chakra-ui/react";
+import Button from "../atoms/button";
+import Textarea from "../atoms/textarea";
+import Avatar from "../atoms/avatar";
+import Container from "../atoms/container";
 
 export default function ProfileForm({ profile }) {
   const [postError, setPostError] = useState("");
@@ -25,29 +26,23 @@ export default function ProfileForm({ profile }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Center py={6}>
-        <Box
-          w={"full"}
-          bg={useColorModeValue("white", "gray.900")}
-          boxShadow={"2xl"}
-          rounded={"lg"}
-          p={6}
-          textAlign={"center"}
-        >
+      <Container>
+        <Center>
           <Avatar image={profile.image} />
-          <Input
-            fontSize={"2xl"}
-            fontFamily={"body"}
-            name="name"
-            {...register("name", { value: profile.name })}
-          />
-          <Textarea
-            name="description"
-            register={register}
-            registerName="description"
-            registerProps={{ value: profile.description }}
-          />
-
+        </Center>
+        <Input
+          fontSize={"2xl"}
+          fontFamily={"body"}
+          name="name"
+          {...register("name", { value: profile.name })}
+        />
+        <Textarea
+          name="description"
+          register={register}
+          registerName="description"
+          registerProps={{ value: profile.description }}
+        />
+        <Center>
           {postError && (
             <Text color="tomato" mt="2">
               {postError}
@@ -59,8 +54,8 @@ export default function ProfileForm({ profile }) {
             </Text>
           )}
           <Button>Submit changes</Button>
-        </Box>
-      </Center>
+        </Center>
+      </Container>
     </form>
   );
 }

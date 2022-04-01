@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
-import { Flex, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
-import MessageCard from "../../components/message";
-import Post from "../../components/post";
+import { Stack } from "@chakra-ui/react";
+import MessageCard from "../../components/molecules/message";
+import Post from "../../components/molecules/post";
+import Container from "../../components/atoms/container";
 import useFeed from "../../hooks/feed";
 
 export default function Feed() {
@@ -14,25 +15,21 @@ export default function Feed() {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <SimpleGrid columns={{ base: 1 }} width="100%">
-      <Post />
+    <Stack>
+      <Container>
+        <Post />
+      </Container>
+
       {feed &&
         feed.map &&
         feed.map((thread, idx) => (
-          <Flex
-            mt="2"
-            key={idx}
-            width="100%"
-            direction={"column"}
-            boxShadow={"lg"}
-            bg={useColorModeValue("grey.50", "polar.100")}
-          >
+          <Container key={idx}>
             {thread.messages.map((post, index) => (
               <MessageCard {...post} index={index} />
             ))}
             <Post root={thread.messages[0].key} />
-          </Flex>
+          </Container>
         ))}
-    </SimpleGrid>
+    </Stack>
   );
 }
