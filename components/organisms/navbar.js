@@ -1,15 +1,26 @@
 import {
   Box,
   Flex,
-  Avatar,
   HStack,
   Link,
   IconButton,
   useDisclosure,
+  useColorMode,
   useColorModeValue,
   Stack,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+
+function ThemeToggleButton() {
+  const { colorMode, toggleColorMode } = useColorMode();
+  return (
+    <IconButton
+      aria-label="Search database"
+      icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+      onClick={toggleColorMode}
+    />
+  );
+}
 
 const Links = [
   {
@@ -39,9 +50,10 @@ const NavLink = ({ children, path }) => (
     px={2}
     py={1}
     rounded={"md"}
+    color={useColorModeValue("polar.700", "snow.300")}
     _hover={{
       textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
+      bg: useColorModeValue("frost.500", "frost.700"),
     }}
     href={`${path}`}
   >
@@ -49,12 +61,11 @@ const NavLink = ({ children, path }) => (
   </Link>
 );
 
-export default function NavBar(props) {
-  const { avatar } = props;
+export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+    <Box bg={useColorModeValue("snow.300", "polar.700")} px={4}>
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
         <IconButton
           size={"md"}
@@ -72,12 +83,7 @@ export default function NavBar(props) {
             ))}
           </HStack>
         </HStack>
-        <Flex alignItems={"center"}>
-          <Avatar
-            size={"sm"}
-            src={`data:image/png;base64,${Buffer.from(avatar || "")}`}
-          />
-        </Flex>
+        <ThemeToggleButton />
       </Flex>
 
       {isOpen ? (

@@ -1,5 +1,5 @@
 import useSWR from "swr";
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+import fetcher from "./utils/fetcher";
 
 export default function useProfile(feedId) {
   const { data, error } = useSWR(

@@ -1,13 +1,14 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import {
-  Button,
-  Flex,
+  Center,
   Text,
-  Textarea,
+  Link,
   useDisclosure,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import Button from "../atoms/button";
+import Textarea from "../atoms/textarea";
 
 export default function Post({ root }) {
   const [postError, setPostError] = useState("");
@@ -35,23 +36,15 @@ export default function Post({ root }) {
   };
 
   return (
-    <Flex
-      mt="2"
-      p="2"
-      width="100%"
-      direction={"column"}
-      boxShadow={"lg"}
-      justifyContent={"left"}
-      position={"relative"}
-      textAlign={"left"}
-      bg={useColorModeValue("white", "gray.800")}
-    >
+    <>
       {(isOpen || !root) && (
         <form onSubmit={handleSubmit(onSubmit)}>
           <Textarea
             name="text"
             placeholder="Write your message here"
-            {...register("text", { required: true })}
+            register={register}
+            registerName="text"
+            registerProps={{ required: true }}
           />
 
           {postError && (
@@ -60,18 +53,22 @@ export default function Post({ root }) {
             </Text>
           )}
 
-          <Button colorScheme="blue" type="submit" mt="2">
-            Post message
-          </Button>
+          <Center>
+            <Button>Post message</Button>
+          </Center>
         </form>
       )}
       {!isOpen && root && (
-        <form>
-          <Button colorScheme="teal" mt="2" onClick={isOpen ? onClose : onOpen}>
+        <Center>
+          <Link
+            color={useColorModeValue("frost.700", "frost.500")}
+            mt="2"
+            onClick={isOpen ? onClose : onOpen}
+          >
             Reply to thread
-          </Button>
-        </form>
+          </Link>
+        </Center>
       )}
-    </Flex>
+    </>
   );
 }
