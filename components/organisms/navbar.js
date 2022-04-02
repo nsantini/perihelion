@@ -43,6 +43,10 @@ const Links = [
     label: "Profile",
     path: "/profile/self",
   },
+  {
+    label: "Peers",
+    path: "/peers",
+  },
 ];
 
 const NavLink = ({ children, path }) => (
