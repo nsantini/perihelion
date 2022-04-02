@@ -10,7 +10,7 @@ import {
 import Button from "../atoms/button";
 import Textarea from "../atoms/textarea";
 
-export default function Post({ root }) {
+export default function MessageForm({ root }) {
   const [postError, setPostError] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { handleSubmit, register, errors, reset } = useForm();

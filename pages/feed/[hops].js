@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { Stack } from "@chakra-ui/react";
 import MessageCard from "../../components/molecules/message";
-import Post from "../../components/molecules/post";
+import MessageForm from "../../components/molecules/messageForm";
 import Container from "../../components/atoms/container";
 import useFeed from "../../hooks/feed";
 
@@ -17,7 +17,7 @@ export default function Feed() {
   return (
     <Stack>
       <Container>
-        <Post />
+        <MessageForm />
       </Container>
 
       {feed &&
@@ -27,7 +27,7 @@ export default function Feed() {
             {thread.messages.map((post, index) => (
               <MessageCard {...post} index={index} />
             ))}
-            <Post root={thread.messages[0].key} />
+            <MessageForm root={thread.messages[0].key} />
           </Container>
         ))}
     </Stack>
