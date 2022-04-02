@@ -2,6 +2,7 @@ const ssbFactory = require("./server");
 const profile = require("./entities/profile");
 const feed = require("./entities/feed");
 const post = require("./entities/post");
+const peers = require("./entities/peers");
 
 module.exports = {
   getProfile: async (id) => {
@@ -40,6 +41,16 @@ module.exports = {
       return await post(ssb, message);
     } catch (err) {
       console.error("postMessage", err);
+      throw err;
+    }
+  },
+
+  getConnectedPeers: async () => {
+    try {
+      const ssb = ssbFactory();
+      return await peers(ssb);
+    } catch (err) {
+      console.error("getConnectedPeers", err);
       throw err;
     }
   },

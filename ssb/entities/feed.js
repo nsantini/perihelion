@@ -1,5 +1,4 @@
 const pull = require("pull-stream");
-const { type, descending } = require("ssb-db2/operators");
 
 const processMsg = (msg) => {
   return {

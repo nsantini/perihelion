@@ -4,7 +4,7 @@ import Avatar from "../atoms/avatar";
 import Content from "../atoms/content";
 import Container from "../atoms/container";
 
-export default function Profile({ profile }) {
+export default function Profile({ profile, short }) {
   return (
     <Container>
       <Stack align={"center"}>
@@ -12,8 +12,7 @@ export default function Profile({ profile }) {
         <Heading fontSize={"2xl"} fontFamily={"body"}>
           {profile.name}
         </Heading>
-        <Content text={profile.description} />
-
+        {!short && <Content text={profile.description} />}
         <Button>Follow</Button>
       </Stack>
     </Container>
