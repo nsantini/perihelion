@@ -1,22 +1,4 @@
-const pull = require("pull-stream");
-
-const getBlob = (ssb, blobId) => {
-  const bufferSource = ssb.blobs.get(blobId);
-  return new Promise((resolve) => {
-    pull(
-      bufferSource,
-      pull.collect(async (err, bufferArray) => {
-        if (err) {
-          await ssb.blobs.want(blobId);
-          resolve(Buffer.alloc(0));
-        } else {
-          const buffer = Buffer.concat(bufferArray);
-          resolve(buffer);
-        }
-      })
-    );
-  });
-};
+const getBlob = require("./blob");
 
 const getProfile = async (ssb, feedId) => {
   return new Promise((resolve, reject) => {
@@ -39,8 +21,7 @@ module.exports = {
         let { name, description, image } = await getProfile(ssb, feedId);
         try {
           if (image) {
-            const imageBuffer = await getBlob(ssb, image);
-            image = imageBuffer.toString("base64");
+            image = await getBlob(ssb, image);
           }
         } catch (e) {
           console.log("Error getting image", e);

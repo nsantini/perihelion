@@ -1,11 +1,31 @@
 const pull = require("pull-stream");
+const blob = require("./blob");
 
-const processMsg = (msg) => {
+const processMsg = async (ssb, msg) => {
+  let imageLinks = [];
+  let blobs = [];
+  const re = /\[(.+)\]\(([^ ]+?)( "(.+)")?\)/g;
+  const matches = [...(msg.value.content.text || "").matchAll(re)];
+  if (matches) {
+    imageLinks = matches
+      .filter((match) => match && match[2][0] === "&")
+      .map((match) => match[2]);
+    blobs = await Promise.all(
+      imageLinks.map(async (link) => {
+        const b = {
+          link,
+          blob: await blob(ssb, link),
+        };
+        return b;
+      })
+    );
+  }
   return {
     key: msg.key,
     author: msg.value.author,
     timestamp: msg.value.timestamp,
     text: msg.value.content.text,
+    blobs,
   };
 };
 
@@ -59,17 +79,26 @@ module.exports = async (ssb, hops) => {
           : ssb.threads.public({ allowlist: ["post", "blog"] }),
         socialFilterInstance,
         pull.take(maxMessages),
-        pull.collect((err, collectedThreads) => {
+        pull.collect(async (err, collectedThreads) => {
           if (err) {
             console.error("get latests posts", err);
             reject(err);
           } else {
             resolve(
-              collectedThreads.map((thread) => {
-                return {
-                  messages: thread.messages.map(processMsg),
-                };
-              })
+              await Promise.all(
+                collectedThreads.map(async (thread) => {
+                  const messages = await Promise.all(
+                    (thread.messages || []).map(async (message) => {
+                      const processed = await processMsg(ssb, message);
+                      return processed;
+                    })
+                  );
+
+                  return {
+                    messages,
+                  };
+                })
+              )
             );
           }
         })
