@@ -3,6 +3,7 @@ const profile = require("./entities/profile");
 const feed = require("./entities/feed");
 const post = require("./entities/post");
 const peers = require("./entities/peers");
+const blob = require("./entities/blob");
 
 module.exports = {
   getProfile: async (id) => {
@@ -51,6 +52,16 @@ module.exports = {
       return await peers(ssb);
     } catch (err) {
       console.error("getConnectedPeers", err);
+      throw err;
+    }
+  },
+
+  getBlob: async (blobId) => {
+    try {
+      const ssb = ssbFactory();
+      return await blob(ssb, blobId);
+    } catch (err) {
+      console.error("getBlob", err);
       throw err;
     }
   },
