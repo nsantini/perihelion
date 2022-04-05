@@ -35,6 +35,7 @@ export default function MessageForm({ root }) {
     if (!response.ok) {
       setPostError(rData.error);
     } else {
+      setTextValue("");
       root && onClose();
     }
   };
