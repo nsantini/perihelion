@@ -35,13 +35,12 @@ export default function MessageForm({ root }) {
     if (!response.ok) {
       setPostError(rData.error);
     } else {
-      reset();
       root && onClose();
     }
   };
 
   let blobUloaded = (data) => {
-    const inputvalue = textValue + ` [${data.blobName}](${data.blobId})`;
+    const inputvalue = textValue + data.link;
     setTextValue(inputvalue);
   };
 

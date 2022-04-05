@@ -59,19 +59,19 @@ module.exports = {
   getBlob: async (blobId) => {
     try {
       const ssb = ssbFactory();
-      return blob(ssb, blobId);
+      return blob.getBlob(ssb, blobId);
     } catch (err) {
       console.error("getBlob", err);
       throw err;
     }
   },
 
-  uploadBlob: async (blobName, blobTempStorage) => {
+  uploadBlob: async (file) => {
     try {
       const ssb = ssbFactory();
-      return blob(ssb, blobId);
+      return blob.uploadBlob(ssb, file);
     } catch (err) {
-      console.error("getBlob", err);
+      console.error("uploadBlob", err);
       throw err;
     }
   },
