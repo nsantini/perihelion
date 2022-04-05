@@ -65,4 +65,14 @@ module.exports = {
       throw err;
     }
   },
+
+  uploadBlob: async (blobName, blobTempStorage) => {
+    try {
+      const ssb = ssbFactory();
+      return blob(ssb, blobId);
+    } catch (err) {
+      console.error("getBlob", err);
+      throw err;
+    }
+  },
 };
