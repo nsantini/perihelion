@@ -6,7 +6,7 @@ const toUrl = (blobs) => (ref) => {
     case "&":
       // its a blob
       return `data:image/png;base64,${Buffer.from(
-        blobs.find((b) => b.link === ref).blob || ""
+        (blobs.find((b) => b.link === ref) || {}).blob || ""
       )}`;
     case "@":
       // its a feed
