@@ -9,7 +9,7 @@ module.exports = {
   getProfile: async (id) => {
     try {
       const ssb = ssbFactory();
-      return await profile.getProfile(ssb, id === "self" ? ssb.id : id);
+      return profile.getProfile(ssb, id === "self" ? ssb.id : id);
     } catch (err) {
       console.error("getProfile", err);
       throw err;
@@ -19,7 +19,7 @@ module.exports = {
   updateProfile: async (updates) => {
     try {
       const ssb = ssbFactory();
-      return await profile.updateProfile(ssb, updates);
+      return profile.updateProfile(ssb, updates);
     } catch (err) {
       console.error("getProfile", err);
       throw err;
@@ -29,7 +29,7 @@ module.exports = {
   getThreads: async (hops) => {
     try {
       const ssb = ssbFactory();
-      return await feed(ssb, hops);
+      return feed(ssb, hops);
     } catch (err) {
       console.error("getThreads", err);
       throw err;
@@ -49,7 +49,7 @@ module.exports = {
   getConnectedPeers: async () => {
     try {
       const ssb = ssbFactory();
-      return await peers(ssb);
+      return peers(ssb);
     } catch (err) {
       console.error("getConnectedPeers", err);
       throw err;
@@ -59,9 +59,19 @@ module.exports = {
   getBlob: async (blobId) => {
     try {
       const ssb = ssbFactory();
-      return await blob(ssb, blobId);
+      return blob.getBlob(ssb, blobId);
     } catch (err) {
       console.error("getBlob", err);
+      throw err;
+    }
+  },
+
+  uploadBlob: async (file) => {
+    try {
+      const ssb = ssbFactory();
+      return blob.uploadBlob(ssb, file);
+    } catch (err) {
+      console.error("uploadBlob", err);
       throw err;
     }
   },

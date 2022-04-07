@@ -1,21 +1,27 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import {
   Center,
   Text,
   Link,
   useDisclosure,
   useColorModeValue,
+  Stack,
 } from "@chakra-ui/react";
 import Button from "../atoms/button";
 import Textarea from "../atoms/textarea";
+import BlobUploader from "./blobUploader";
 
 export default function MessageForm({ root }) {
   const [postError, setPostError] = useState("");
+  const [textValue, setTextValue] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { handleSubmit, register, errors, reset } = useForm();
-  const onSubmit = async (data, e) => {
-    data.root = root;
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      root,
+      text: textValue,
+    };
     setPostError("");
     const response = await fetch("/api/post", {
       method: "POST",
@@ -30,33 +36,47 @@ export default function MessageForm({ root }) {
     if (!response.ok) {
       setPostError(rData.error);
     } else {
-      reset();
+      setTextValue("");
       root && onClose();
     }
+  };
+
+  let blobUloaded = (data) => {
+    const inputvalue = textValue + data.link;
+    setTextValue(inputvalue);
   };
 
   return (
     <>
       {(isOpen || !root) && (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Textarea
-            name="text"
-            placeholder="Write your message here"
-            register={register}
-            registerName="text"
-            registerProps={{ required: true }}
-          />
+        <>
+          <form onSubmit={onSubmit}>
+            <Textarea
+              placeholder="Write your message here"
+              name="text"
+              value={textValue}
+              onChange={(e) => {
+                setTextValue(e.target.value);
+              }}
+            />
 
-          {postError && (
-            <Text color="tomato" mt="2">
-              {postError}
-            </Text>
-          )}
-
-          <Center>
-            <Button>Post message</Button>
-          </Center>
-        </form>
+            {postError && (
+              <Text color="tomato" mt="2">
+                {postError}
+              </Text>
+            )}
+            <Center>
+              <Stack direction="row">
+                <Center>
+                  <Button>Post message</Button>
+                </Center>
+                <Center>
+                  <BlobUploader blobUloaded={blobUloaded} />
+                </Center>
+              </Stack>
+            </Center>
+          </form>
+        </>
       )}
       {!isOpen && root && (
         <Center>

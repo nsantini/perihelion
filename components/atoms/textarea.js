@@ -3,13 +3,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-export default function Textarea({
-  register,
-  registerName,
-  registerProps,
-  name,
-  placeholder,
-}) {
+export default function Textarea({ name, placeholder, value, onChange }) {
   return (
     <ChakraTextarea
       color={useColorModeValue("polar.100", "snow.500")}
@@ -17,8 +11,9 @@ export default function Textarea({
       px={3}
       mt={4}
       name={name}
+      value={value}
+      onChange={onChange}
       placeholder={placeholder}
-      {...register(registerName, registerProps)}
     />
   );
 }

@@ -1,4 +1,4 @@
-const getBlob = require("./blob");
+const blob = require("./blob");
 
 const getProfile = async (ssb, feedId) => {
   return new Promise((resolve, reject) => {
@@ -21,7 +21,7 @@ module.exports = {
         let { name, description, image } = await getProfile(ssb, feedId);
         try {
           if (image) {
-            image = await getBlob(ssb, image);
+            image = await blob.getBlob(ssb, image);
           }
         } catch (e) {
           console.log("Error getting image", e);

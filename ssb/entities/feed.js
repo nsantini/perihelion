@@ -14,7 +14,7 @@ const processMsg = async (ssb, msg) => {
       imageLinks.map(async (link) => {
         const b = {
           link,
-          blob: await blob(ssb, link),
+          blob: await blob.getBlob(ssb, link),
         };
         return b;
       })

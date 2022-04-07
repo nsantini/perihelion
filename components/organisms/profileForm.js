@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { Center, Text, Input } from "@chakra-ui/react";
 import Button from "../atoms/button";
 import Textarea from "../atoms/textarea";
@@ -8,9 +7,12 @@ import Container from "../atoms/container";
 
 export default function ProfileForm({ profile }) {
   const [postError, setPostError] = useState("");
+  const [name, setName] = useState(profile.name);
+  const [description, setDescription] = useState(profile.description);
   const [isSuccessfullySubmitted, setIsSuccessfullySubmitted] = useState(false);
-  const { handleSubmit, register } = useForm();
-  const onSubmit = async (data, e) => {
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
     setPostError("");
     setIsSuccessfullySubmitted(false);
     const response = await fetch(`/api/profile/${profile.id}`, {
@@ -18,14 +20,17 @@ export default function ProfileForm({ profile }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        name,
+        description,
+      }),
     });
     const rData = await response.json();
     response.ok ? setIsSuccessfullySubmitted(true) : setPostError(rData.error);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={onSubmit}>
       <Container>
         <Center>
           <Avatar image={profile.image} />
@@ -34,13 +39,13 @@ export default function ProfileForm({ profile }) {
           fontSize={"2xl"}
           fontFamily={"body"}
           name="name"
-          {...register("name", { value: profile.name })}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
         <Textarea
           name="description"
-          register={register}
-          registerName="description"
-          registerProps={{ value: profile.description }}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
         <Center>
           {postError && (
