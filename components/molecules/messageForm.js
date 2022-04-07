@@ -5,6 +5,7 @@ import {
   Link,
   useDisclosure,
   useColorModeValue,
+  Stack,
 } from "@chakra-ui/react";
 import Button from "../atoms/button";
 import Textarea from "../atoms/textarea";
@@ -64,13 +65,17 @@ export default function MessageForm({ root }) {
                 {postError}
               </Text>
             )}
-
             <Center>
-              <Button>Post message</Button>
+              <Stack direction="row">
+                <Center>
+                  <Button>Post message</Button>
+                </Center>
+                <Center>
+                  <BlobUploader blobUloaded={blobUloaded} />
+                </Center>
+              </Stack>
             </Center>
           </form>
-
-          <BlobUploader blobUloaded={blobUloaded} />
         </>
       )}
       {!isOpen && root && (
