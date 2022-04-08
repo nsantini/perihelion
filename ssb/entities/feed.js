@@ -1,27 +1,21 @@
 const pull = require("pull-stream");
 const processMsg = require("./utils/message");
+const socialGraph = require("./utils/socialGraph");
 
 /**
  * Returns a function that filters messages based on who published the message.
  */
 const socialFilter = async (ssb, hops) => {
   const { id } = ssb;
-  const relationshipObject = await new Promise((resolve, reject) => {
-    ssb.friends.graph((err, graph) => {
-      if (err) {
-        console.error(err);
-        reject(err);
-      }
-      resolve(graph[id] || {});
-    });
-  });
+  const graph = await socialGraph.getSocialGraph(ssb);
+  const relationshipObject = graph[id];
 
   const followingList = Object.entries(relationshipObject)
-    .filter(([, val]) => val >= 0)
+    .filter(([, val]) => val >= socialGraph.weightings.following)
     .map(([key]) => key);
 
   const blockingList = Object.entries(relationshipObject)
-    .filter(([, val]) => val === -1)
+    .filter(([, val]) => val === socialGraph.weightings.blocking)
     .map(([key]) => key);
 
   return pull.filter((thread) => {
