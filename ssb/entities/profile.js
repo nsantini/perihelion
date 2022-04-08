@@ -19,9 +19,10 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       try {
         let { name, description, image } = await getProfile(ssb, feedId);
+        let imageBlob = "";
         try {
           if (image) {
-            image = await blob.getBlob(ssb, image);
+            imageBlob = await blob.getBlob(ssb, image);
           }
         } catch (e) {
           console.log("Error getting image", e);
@@ -31,6 +32,7 @@ module.exports = {
           name: name || feedId.slice(1, 1 + 8),
           description: description || "",
           image: image || "",
+          imageBlob,
         });
       } catch (err) {
         reject(err);
