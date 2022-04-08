@@ -3,6 +3,7 @@ import { Stack } from "@chakra-ui/react";
 import MessageCard from "../../components/molecules/message";
 import MessageForm from "../../components/molecules/messageForm";
 import Container from "../../components/atoms/container";
+import Thread from "../../components/organisms/thread";
 import useFeed from "../../hooks/feed";
 
 export default function Feed() {
@@ -22,14 +23,7 @@ export default function Feed() {
 
       {feed &&
         feed.map &&
-        feed.map((thread, idx) => (
-          <Container key={idx}>
-            {thread.messages.map((post, index) => (
-              <MessageCard {...post} index={index} />
-            ))}
-            <MessageForm root={thread.messages[0].key} />
-          </Container>
-        ))}
+        feed.map((thread, idx) => <Thread thread={thread} key={idx} />)}
     </Stack>
   );
 }

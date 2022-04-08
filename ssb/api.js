@@ -4,6 +4,7 @@ const feed = require("./entities/feed");
 const post = require("./entities/post");
 const peers = require("./entities/peers");
 const blob = require("./entities/blob");
+const thread = require("./entities/thread");
 
 module.exports = {
   getProfile: async (id) => {
@@ -70,6 +71,16 @@ module.exports = {
     try {
       const ssb = ssbFactory();
       return blob.uploadBlob(ssb, file);
+    } catch (err) {
+      console.error("uploadBlob", err);
+      throw err;
+    }
+  },
+
+  getThread: async (msgId) => {
+    try {
+      const ssb = ssbFactory();
+      return thread(ssb, msgId);
     } catch (err) {
       console.error("uploadBlob", err);
       throw err;
