@@ -27,6 +27,7 @@ export default function Content({ text, blobs }) {
       textAlign={"left"}
       color={useColorModeValue("polar.100", "snow.300")}
       px={3}
+      mt={2}
       dangerouslySetInnerHTML={{
         __html: ssbMarkdown.block(text, { toUrl: toUrl(blobs) }),
       }}

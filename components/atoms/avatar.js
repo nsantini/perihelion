@@ -6,7 +6,6 @@ export default function Avatar({ image, size }) {
       size={size || "xl"}
       src={`data:image/png;base64,${Buffer.from(image || "")}`}
       alt={"Avatar Alt"}
-      mb={4}
       pos={"relative"}
     />
   );

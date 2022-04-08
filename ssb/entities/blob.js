@@ -50,7 +50,7 @@ module.exports = {
         } else {
           link = `\n[${file.originalFilename}](${hash})`;
         }
-        resolve({ link });
+        resolve({ link, hash });
       } catch (err) {
         reject(err);
       }
