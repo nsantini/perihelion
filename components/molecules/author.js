@@ -9,7 +9,7 @@ export default function Author({ author, timestamp }) {
   const postedDate = new Date(timestamp);
   return (
     <Flex direction={"row"} textAlign={"left"}>
-      <Avatar image={profile.image} size={"md"} />
+      <Avatar image={profile.imageBlob} size={"md"} />
       <Flex direction={"column"} textAlign={"left"} ml="2">
         <Link
           fontFamily={"Work Sans"}

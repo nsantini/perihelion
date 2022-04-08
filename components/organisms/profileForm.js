@@ -40,7 +40,7 @@ export default function ProfileForm({ profile }) {
     <form onSubmit={onSubmit}>
       <Container>
         <Center>
-          <Avatar image={image} />
+          <Avatar image={profile.imageBlob} />
         </Center>
         <Center>
           <BlobUploader blobUloaded={blobUloaded} />

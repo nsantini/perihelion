@@ -8,7 +8,7 @@ export default function Profile({ profile, short }) {
   return (
     <Container>
       <Stack align={"center"}>
-        <Avatar image={profile.image} />
+        <Avatar image={profile.imageBlob} />
         <Heading fontSize={"2xl"} fontFamily={"body"}>
           {profile.name}
         </Heading>
