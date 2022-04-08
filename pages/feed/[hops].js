@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Stack } from "@chakra-ui/react";
+import { Stack, Center, Link, useColorModeValue } from "@chakra-ui/react";
 import MessageCard from "../../components/molecules/message";
 import MessageForm from "../../components/molecules/messageForm";
 import Container from "../../components/atoms/container";
@@ -22,12 +22,18 @@ export default function Feed() {
 
       {feed &&
         feed.map &&
-        feed.map((thread, idx) => (
-          <Container key={idx}>
-            {thread.messages.map((post, index) => (
-              <MessageCard {...post} index={index} />
-            ))}
-            <MessageForm root={thread.messages[0].key} />
+        feed.map((thread, index) => (
+          <Container key={index}>
+            <MessageCard {...thread.messages[0]} />
+            <Center>
+              <Link
+                color={useColorModeValue("frost.700", "frost.500")}
+                mt="2"
+                href={`/thread/${encodeURIComponent(thread.messages[0].key)}`}
+              >
+                {thread.replyCount} replies
+              </Link>
+            </Center>
           </Container>
         ))}
     </Stack>

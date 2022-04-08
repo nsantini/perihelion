@@ -53,18 +53,16 @@ const socialFilter = async (ssb, hops) => {
     .map(([key]) => key);
 
   return pull.filter((thread) => {
-    return thread.messages.some((message) => {
-      if (blockingList.includes(message.value.author)) {
-        return false;
-      }
-      if (message.value.author === id) {
-        return true;
-      } else if (hops === 1) {
-        return followingList.includes(message.value.author);
-      } else if (hops > 1) {
-        return true;
-      }
-    });
+    if (blockingList.includes(thread.root.value.author)) {
+      return false;
+    }
+    if (thread.root.value.author === id) {
+      return true;
+    } else if (hops === 1) {
+      return followingList.includes(thread.root.value.author);
+    } else if (hops > 1) {
+      return true;
+    }
   });
 };
 
@@ -75,8 +73,11 @@ module.exports = async (ssb, hops) => {
       const socialFilterInstance = await socialFilter(ssb, hops);
       pull(
         hops === 0
-          ? ssb.threads.profile({ id: ssb.id, allowlist: ["post", "blog"] })
-          : ssb.threads.public({ allowlist: ["post", "blog"] }),
+          ? ssb.threads.profileSummary({
+              id: ssb.id,
+              allowlist: ["post", "blog"],
+            })
+          : ssb.threads.publicSummary({ allowlist: ["post", "blog"] }),
         socialFilterInstance,
         pull.take(maxMessages),
         pull.collect(async (err, collectedThreads) => {
@@ -87,15 +88,11 @@ module.exports = async (ssb, hops) => {
             resolve(
               await Promise.all(
                 collectedThreads.map(async (thread) => {
-                  const messages = await Promise.all(
-                    (thread.messages || []).map(async (message) => {
-                      const processed = await processMsg(ssb, message);
-                      return processed;
-                    })
-                  );
+                  const root = await processMsg(ssb, thread.root);
 
                   return {
-                    messages,
+                    messages: [root],
+                    replyCount: thread.replyCount,
                   };
                 })
               )
