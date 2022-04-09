@@ -50,7 +50,7 @@ module.exports = {
   getConnectedPeers: async () => {
     try {
       const ssb = ssbFactory();
-      return peers(ssb);
+      return peers.getConnectedPeers(ssb);
     } catch (err) {
       console.error("getConnectedPeers", err);
       throw err;
@@ -82,7 +82,17 @@ module.exports = {
       const ssb = ssbFactory();
       return thread(ssb, msgId);
     } catch (err) {
-      console.error("uploadBlob", err);
+      console.error("getThread", err);
+      throw err;
+    }
+  },
+
+  updateFollow: async (feedId, currentState) => {
+    try {
+      const ssb = ssbFactory();
+      return peers.updateFollow(ssb, feedId, currentState);
+    } catch (err) {
+      console.error("updateFollow", err);
       throw err;
     }
   },

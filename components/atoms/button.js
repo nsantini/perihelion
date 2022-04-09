@@ -1,6 +1,6 @@
 import { Button as ChakraButton, useColorModeValue } from "@chakra-ui/react";
 
-export default function Button({ children }) {
+export default function Button({ children, onClick }) {
   return (
     <ChakraButton
       w={"full"}
@@ -9,6 +9,7 @@ export default function Button({ children }) {
       color={useColorModeValue("snow.500", "snow.500")}
       rounded={"md"}
       type="submit"
+      onClick={onClick}
       mt={2}
     >
       {children}
