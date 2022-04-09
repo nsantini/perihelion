@@ -19,7 +19,7 @@ module.exports = {
           console.error(err);
           reject(err);
         }
-        resolve({ state });
+        resolve({ following: state });
       });
     });
   },

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Heading, Link, Stack } from "@chakra-ui/react";
 import Button from "../atoms/button";
 import Avatar from "../atoms/avatar";
@@ -5,6 +6,7 @@ import Content from "../atoms/content";
 import Container from "../atoms/container";
 
 export default function Profile({ profile, short }) {
+  const [following, setFollowing] = useState(profile.following);
   const updateState = async (e) => {
     e.preventDefault;
     const response = await fetch(`/api/follow`, {
@@ -17,6 +19,8 @@ export default function Profile({ profile, short }) {
         currentState: profile.following,
       }),
     });
+    const data = await response.json();
+    if (response.ok) setFollowing(data.following);
   };
 
   return (
@@ -27,8 +31,8 @@ export default function Profile({ profile, short }) {
           {profile.name}
         </Heading>
         {!short && <Content text={profile.description} />}
-        {!profile.following && <Button onClick={updateState}>Follow</Button>}
-        {profile.following && <Link onClick={updateState}>Unfollow</Link>}
+        {!following && <Button onClick={updateState}>Follow</Button>}
+        {following && <Link onClick={updateState}>Unfollow</Link>}
       </Stack>
     </Container>
   );

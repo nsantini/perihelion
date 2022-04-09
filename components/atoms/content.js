@@ -2,6 +2,7 @@ import { Text, useColorModeValue } from "@chakra-ui/react";
 import ssbMarkdown from "ssb-markdown";
 
 const toUrl = (blobs) => (ref) => {
+  if (!blobs) return ref;
   switch (ref[0]) {
     case "&":
       // its a blob
