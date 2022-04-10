@@ -5,6 +5,7 @@ const post = require("./entities/post");
 const peers = require("./entities/peers");
 const blob = require("./entities/blob");
 const thread = require("./entities/thread");
+const invites = require("./entities/invites");
 
 module.exports = {
   getProfile: async (id) => {
@@ -93,6 +94,16 @@ module.exports = {
       return peers.updateFollow(ssb, feedId, currentState);
     } catch (err) {
       console.error("updateFollow", err);
+      throw err;
+    }
+  },
+
+  claimInvite: async (invite) => {
+    try {
+      const ssb = ssbFactory();
+      return invites(ssb, invite);
+    } catch (err) {
+      console.error("claimInvite", err);
       throw err;
     }
   },
