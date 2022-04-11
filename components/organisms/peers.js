@@ -9,7 +9,7 @@ export default function Peers() {
   return (
     <SimpleGrid columns={2}>
       {peers.map((peer) => (
-        <Profile profile={peer} short={true} />
+        <Profile feedId={peer.id} short={true} />
       ))}
     </SimpleGrid>
   );
