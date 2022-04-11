@@ -10,7 +10,9 @@ module.exports = {
         bufferSource,
         pull.collect(async (err, bufferArray) => {
           if (err) {
-            await ssb.blobs.want(blobId);
+            await ssb.blobs.want(blobId, (err, done) => {
+              if (err) console.error(err);
+            });
             resolve(Buffer.alloc(0));
           } else {
             const buffer = Buffer.concat(bufferArray);

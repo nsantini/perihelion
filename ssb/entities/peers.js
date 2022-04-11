@@ -3,7 +3,7 @@ const socialGraph = require("./utils/socialGraph");
 
 module.exports = {
   getConnectedPeers: async (ssb) => {
-    const connectedPeers = ssb.conn.query().peersConnected();
+    const connectedPeers = ssb.conn.query().peersInConnection();
     const connectedPeersProfiles = await Promise.all(
       connectedPeers.map(
         async ([addr, data]) => await profile.getProfile(ssb, data.key)

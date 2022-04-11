@@ -32,6 +32,10 @@ module.exports = () => {
       automigrate: true,
       dangerouslyKillFlumeWhenMigrated: true,
     },
+    replicate: {
+      legacy: true,
+      fallback: true,
+    },
   });
   return global._ssbServer;
 };
