@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import Profile from "../../components/organisms/profile";
-import ProfileForm from "../../components/organisms/profileForm";
 import useProfile from "../../hooks/profile";
 
 export default function ProfilePage() {
@@ -11,9 +10,5 @@ export default function ProfilePage() {
   if (isError) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
 
-  return feedId === "self" ? (
-    <ProfileForm profile={profile} />
-  ) : (
-    <Profile profile={profile} />
-  );
+  return <Profile profile={profile} />;
 }

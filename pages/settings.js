@@ -9,10 +9,18 @@ import {
 import Input from "../components/atoms/input";
 import Container from "../components/atoms/container";
 import Button from "../components/atoms/button";
+import Peers from "../components/organisms/peers";
+import ProfileForm from "../components/organisms/profileForm";
+import useProfile from "../hooks/profile";
 
 export default function Settings() {
+  const { profile, isLoading, isError } = useProfile("self");
   const [invite, setInvite] = useState("");
   const [error, setError] = useState("");
+
+  if (isError) return <div>Failed to load</div>;
+  if (isLoading) return <div>Loading...</div>;
+
   const claim = async (e) => {
     e.preventDefault();
     setError("");
@@ -32,6 +40,7 @@ export default function Settings() {
       setInvite("");
     }
   };
+
   return (
     <Stack>
       <Heading color={useColorModeValue("polar.100", "snow.100")} as="h2">
@@ -50,6 +59,18 @@ export default function Settings() {
         <Center>
           <Button onClick={claim}>Claim</Button>
         </Center>
+      </Container>
+      <Container>
+        <Heading color={useColorModeValue("polar.100", "snow.100")} as="h4">
+          Update Profile
+        </Heading>
+        <ProfileForm profile={profile} />
+      </Container>
+      <Container>
+        <Heading color={useColorModeValue("polar.100", "snow.100")} as="h4">
+          Online Peers
+        </Heading>
+        <Peers />
       </Container>
     </Stack>
   );

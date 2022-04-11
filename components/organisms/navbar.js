@@ -40,14 +40,6 @@ const Links = [
     path: "/feed/2",
   },
   {
-    label: "Profile",
-    path: "/profile/self",
-  },
-  {
-    label: "Peers",
-    path: "/peers",
-  },
-  {
     label: "Settings",
     path: "/settings",
   },
