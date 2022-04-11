@@ -19,6 +19,7 @@ module.exports = () => {
     // // Connections
     .use(require("ssb-conn"))
     .use(require("ssb-lan"))
+    .use(require("ssb-invite-client"))
     // // Queries
     .use(require("ssb-threads")) // needs: db, db2, friends
     // .use(require('ssb-search2')) // needs: db2
@@ -30,6 +31,10 @@ module.exports = () => {
     db2: {
       automigrate: true,
       dangerouslyKillFlumeWhenMigrated: true,
+    },
+    replicate: {
+      legacy: true,
+      fallback: true,
     },
   });
   return global._ssbServer;

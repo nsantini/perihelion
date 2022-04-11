@@ -47,6 +47,10 @@ const Links = [
     label: "Peers",
     path: "/peers",
   },
+  {
+    label: "Settings",
+    path: "/settings",
+  },
 ];
 
 const NavLink = ({ children, path }) => (
