@@ -28,10 +28,6 @@ const Links = [
     path: "/",
   },
   {
-    label: "My Posts",
-    path: "/feed/0",
-  },
-  {
     label: "My Circle",
     path: "/feed/1",
   },

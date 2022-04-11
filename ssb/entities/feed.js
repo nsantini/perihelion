@@ -32,42 +32,60 @@ const socialFilter = async (ssb, hops) => {
   });
 };
 
-module.exports = async (ssb, hops) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const maxMessages = 20;
-      const socialFilterInstance = await socialFilter(ssb, hops);
-      pull(
-        hops === 0
-          ? ssb.threads.profileSummary({
-              id: ssb.id,
-              allowlist: ["post", "blog"],
-            })
-          : ssb.threads.publicSummary({ allowlist: ["post", "blog"] }),
-        socialFilterInstance,
-        pull.take(maxMessages),
-        pull.collect(async (err, collectedThreads) => {
-          if (err) {
-            console.error("get latests posts", err);
-            reject(err);
-          } else {
-            resolve(
-              await Promise.all(
-                collectedThreads.map(async (thread) => {
-                  const root = await processMsg(ssb, thread.root);
-
-                  return {
-                    messages: [root],
-                    replyCount: thread.replyCount,
-                  };
-                })
-              )
-            );
-          }
-        })
-      );
-    } catch (err) {
+const collector = (ssb, resolve, reject) => {
+  return async (err, collectedThreads) => {
+    if (err) {
+      console.error("get latests posts", err);
       reject(err);
+    } else {
+      resolve(
+        await Promise.all(
+          collectedThreads.map(async (thread) => {
+            const root = await processMsg(ssb, thread.root);
+
+            return {
+              messages: [root],
+              replyCount: thread.replyCount,
+            };
+          })
+        )
+      );
     }
-  });
+  };
+};
+
+module.exports = {
+  getProfileFeed: async (ssb, feedId) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const maxMessages = 20;
+        pull(
+          ssb.threads.profileSummary({
+            id: feedId,
+            allowlist: ["post", "blog"],
+          }),
+          pull.take(maxMessages),
+          pull.collect(collector(ssb, resolve, reject))
+        );
+      } catch (err) {
+        reject(err);
+      }
+    });
+  },
+  getPublicFeed: async (ssb, hops) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const maxMessages = 20;
+        const socialFilterInstance = await socialFilter(ssb, hops);
+        pull(
+          ssb.threads.publicSummary({ allowlist: ["post", "blog"] }),
+          socialFilterInstance,
+          pull.take(maxMessages),
+          pull.collect(collector(ssb, resolve, reject))
+        );
+      } catch (err) {
+        reject(err);
+      }
+    });
+  },
 };

@@ -34,7 +34,7 @@ module.exports = () => {
     },
     replicate: {
       legacy: true,
-      fallback: true,
+      fallback: false,
     },
   });
   return global._ssbServer;

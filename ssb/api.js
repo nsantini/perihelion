@@ -31,9 +31,19 @@ module.exports = {
   getThreads: async (hops) => {
     try {
       const ssb = ssbFactory();
-      return feed(ssb, hops);
+      return feed.getPublicFeed(ssb, hops);
     } catch (err) {
       console.error("getThreads", err);
+      throw err;
+    }
+  },
+
+  getProfileThreads: async (feedId) => {
+    try {
+      const ssb = ssbFactory();
+      return feed.getProfileFeed(ssb, feedId);
+    } catch (err) {
+      console.error("getProfileThreads", err);
       throw err;
     }
   },

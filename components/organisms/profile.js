@@ -4,9 +4,15 @@ import Button from "../atoms/button";
 import Avatar from "../atoms/avatar";
 import Content from "../atoms/content";
 import Container from "../atoms/container";
+import useProfile from "../../hooks/profile";
 
-export default function Profile({ profile, short }) {
-  const [following, setFollowing] = useState(profile.following);
+export default function Profile({ feedId, short }) {
+  const { profile, isLoading, isError } = useProfile(feedId);
+  //const [following, setFollowing] = useState(profile.following);
+
+  if (isError) return <div>Failed to load</div>;
+  if (isLoading) return <div>Loading...</div>;
+
   const updateState = async (e) => {
     e.preventDefault;
     const response = await fetch(`/api/follow`, {
@@ -20,7 +26,7 @@ export default function Profile({ profile, short }) {
       }),
     });
     const data = await response.json();
-    if (response.ok) setFollowing(data.following);
+    // if (response.ok) setFollowing(data.following);
   };
 
   return (
@@ -31,8 +37,8 @@ export default function Profile({ profile, short }) {
           {profile.name}
         </Heading>
         {!short && <Content text={profile.description} />}
-        {!following && <Button onClick={updateState}>Follow</Button>}
-        {following && <Link onClick={updateState}>Unfollow</Link>}
+        {!profile.following && <Button onClick={updateState}>Follow</Button>}
+        {profile.following && <Link onClick={updateState}>Unfollow</Link>}
       </Stack>
     </Container>
   );
