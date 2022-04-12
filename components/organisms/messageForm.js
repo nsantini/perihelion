@@ -9,11 +9,13 @@ import {
 } from "@chakra-ui/react";
 import Button from "../atoms/button";
 import Textarea from "../atoms/textarea";
-import BlobUploader from "./blobUploader";
+import BlobUploader from "../molecules/blobUploader";
+import Profiles from "../molecules/profiles";
 
 export default function MessageForm({ root }) {
   const [postError, setPostError] = useState("");
   const [textValue, setTextValue] = useState("");
+  const [name, setName] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const onSubmit = async (e) => {
@@ -41,9 +43,21 @@ export default function MessageForm({ root }) {
     }
   };
 
-  let blobUloaded = (data) => {
+  const blobUloaded = (data) => {
     const inputvalue = textValue + data.link;
     setTextValue(inputvalue);
+  };
+
+  const filterProfiles = (content) => {
+    const re = /^(@\w+)| (@\w+)/g;
+    const matches = content.match(re);
+    if (matches) {
+      setName(matches[0].trim().substring(1));
+    }
+  };
+
+  const insertMention = (original, mention) => {
+    setTextValue(textValue.replace("@" + original, mention));
   };
 
   return (
@@ -57,8 +71,10 @@ export default function MessageForm({ root }) {
               value={textValue}
               onChange={(e) => {
                 setTextValue(e.target.value);
+                filterProfiles(e.target.value);
               }}
             />
+            {name && <Profiles name={name} onSelect={insertMention} />}
 
             {postError && (
               <Text color="tomato" mt="2">

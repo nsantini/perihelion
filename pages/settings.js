@@ -9,7 +9,7 @@ import {
 import Input from "../components/atoms/input";
 import Container from "../components/atoms/container";
 import Button from "../components/atoms/button";
-import Peers from "../components/organisms/peers";
+import Peers from "../components/molecules/peers";
 import ProfileForm from "../components/organisms/profileForm";
 import useProfile from "../hooks/profile";
 

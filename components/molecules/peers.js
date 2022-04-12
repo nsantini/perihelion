@@ -1,6 +1,6 @@
 import { SimpleGrid } from "@chakra-ui/react";
 import usePeers from "../../hooks/peers";
-import Profile from "./profile";
+import Profile from "../organisms/profile";
 
 export default function Peers() {
   const { peers, isLoading, isError } = usePeers();

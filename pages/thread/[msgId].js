@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { Stack } from "@chakra-ui/react";
-import Thread from "../../components/organisms/thread";
+import Thread from "../../components/molecules/thread";
 import useThread from "../../hooks/thread";
 
 export default function Feed() {
