@@ -47,9 +47,21 @@ export default function Settings() {
         Perihellion Settings
       </Heading>
       <Container>
-        <Heading color={useColorModeValue("polar.100", "snow.100")} as="h4">
+        <Text color={useColorModeValue("polar.100", "snow.100")} fontSize="2xl">
+          Update Profile
+        </Text>
+        <ProfileForm profile={profile} />
+      </Container>
+      <Container>
+        <Text color={useColorModeValue("polar.100", "snow.100")} fontSize="2xl">
+          Online Peers
+        </Text>
+        <Peers />
+      </Container>
+      <Container>
+        <Text color={useColorModeValue("polar.100", "snow.100")} fontSize="2xl">
           Claim a Pub invite
-        </Heading>
+        </Text>
         <Input value={invite} onChange={(e) => setInvite(e.target.value)} />
         {error && (
           <Text color="tomato" mt="2">
@@ -59,18 +71,6 @@ export default function Settings() {
         <Center>
           <Button onClick={claim}>Claim</Button>
         </Center>
-      </Container>
-      <Container>
-        <Heading color={useColorModeValue("polar.100", "snow.100")} as="h4">
-          Update Profile
-        </Heading>
-        <ProfileForm profile={profile} />
-      </Container>
-      <Container>
-        <Heading color={useColorModeValue("polar.100", "snow.100")} as="h4">
-          Online Peers
-        </Heading>
-        <Peers />
       </Container>
     </Stack>
   );
