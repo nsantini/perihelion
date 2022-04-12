@@ -1,6 +1,6 @@
 import Container from "../atoms/container";
-import MessageCard from "../molecules/message";
-import MessageForm from "../molecules/messageForm";
+import MessageCard from "./message";
+import MessageForm from "../organisms/messageForm";
 
 export default function Tread({ thread }) {
   return (

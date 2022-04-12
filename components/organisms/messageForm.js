@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import Button from "../atoms/button";
 import Textarea from "../atoms/textarea";
-import BlobUploader from "./blobUploader";
+import BlobUploader from "../molecules/blobUploader";
 
 export default function MessageForm({ root }) {
   const [postError, setPostError] = useState("");
