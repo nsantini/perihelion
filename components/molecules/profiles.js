@@ -12,14 +12,19 @@ export default function Profiles({ name, onSelect }) {
     onSelect(name, event.target.value);
   };
   return (
-    <Select placeholder="Mention a user" onChange={handleChange} value={value}>
+    <Select
+      placeholder="Mention a user"
+      onChange={handleChange}
+      value={value}
+      overflowX="hidden"
+    >
       {profiles &&
         profiles.map((profile) => (
           <option
             key={profile.feedId}
             value={`[${profile.name}](${profile.feedId})`}
           >
-            {profile.name}
+            {profile.name} — {profile.feedId}
           </option>
         ))}
     </Select>
