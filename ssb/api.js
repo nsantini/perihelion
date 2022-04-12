@@ -18,6 +18,16 @@ module.exports = {
     }
   },
 
+  filterProfiles: async (name) => {
+    try {
+      const ssb = ssbFactory();
+      return profile.filterProfiles(ssb, name);
+    } catch (err) {
+      console.error("filterProfiles", err);
+      throw err;
+    }
+  },
+
   updateProfile: async (updates) => {
     try {
       const ssb = ssbFactory();

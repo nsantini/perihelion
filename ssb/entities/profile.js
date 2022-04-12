@@ -16,6 +16,23 @@ const getProfile = async (ssb, feedId) => {
 };
 
 module.exports = {
+  filterProfiles: async (ssb, name) => {
+    return new Promise((resolve, reject) => {
+      try {
+        const allProfiles = ssb.db.getIndex("aboutSelf").getProfiles();
+        const profiles = Object.keys(allProfiles)
+          .map((key) => ({ feedId: key, ...allProfiles[key] }))
+          .filter(
+            (profile) =>
+              profile.name && profile.name.toLowerCase().includes(name)
+          );
+        resolve(profiles);
+      } catch (err) {
+        console.error(err);
+        reject(err);
+      }
+    });
+  },
   getProfile: async (ssb, feedId) => {
     return new Promise(async (resolve, reject) => {
       try {
