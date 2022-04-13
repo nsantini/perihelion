@@ -15,7 +15,7 @@ const toUrl = (ref, blobs) => {
       return `/profile/${encodeURIComponent(ref)}`;
     case "%":
       // its a link (to a message?)
-      return `/feed/${encodeURIComponent(ref)}`;
+      return `/thread/${encodeURIComponent(ref)}`;
     default:
       // unknown
       return ref;
