@@ -26,7 +26,11 @@ const createSsbTheme = (blobs) => {
   return {
     a: (props) => {
       const { children, href } = props;
-      return <Link href={toUrl(href)}>{children}</Link>;
+      return (
+        <Link href={toUrl(href)} textDecoration="underline">
+          {children}
+        </Link>
+      );
     },
     img: (props) => {
       return <Img {...props} src={toUrl(props.src, blobs)} />;

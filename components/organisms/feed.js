@@ -9,7 +9,7 @@ export default function Feed({ hops }) {
   if (isError) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
   return (
-    <Container>
+    <>
       {feed.map((thread, index) => (
         <Container key={index}>
           <MessageCard {...thread.messages[0]} />
@@ -24,6 +24,6 @@ export default function Feed({ hops }) {
           </Center>
         </Container>
       ))}
-    </Container>
+    </>
   );
 }
