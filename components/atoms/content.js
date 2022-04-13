@@ -6,6 +6,7 @@ const toUrl = (ref, blobs) => {
   switch (ref[0]) {
     case "&":
       // its a blob
+      if (!blobs || !blobs.find) return ref;
       return `data:image/png;base64,${Buffer.from(
         (blobs.find((b) => b.link === ref) || {}).blob || ""
       )}`;
