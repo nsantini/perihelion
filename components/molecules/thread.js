@@ -4,11 +4,15 @@ import MessageForm from "../organisms/messageForm";
 
 export default function Tread({ thread }) {
   return (
-    <Container>
+    <>
       {thread.messages.map((post, index) => (
-        <MessageCard {...post} index={index} />
+        <Container key={index}>
+          <MessageCard {...post} index={index} />
+        </Container>
       ))}
-      <MessageForm root={thread.messages[0].key} />
-    </Container>
+      <Container>
+        <MessageForm root={thread.messages[0].key} />
+      </Container>
+    </>
   );
 }
