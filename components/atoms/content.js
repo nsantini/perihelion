@@ -1,4 +1,6 @@
 import { Text, useColorModeValue } from "@chakra-ui/react";
+import ChakraUIRenderer from "chakra-ui-markdown-renderer";
+import ReactMarkdown from "react-markdown";
 import ssbMarkdown from "ssb-markdown";
 
 const toUrl = (blobs) => (ref) => {
@@ -23,15 +25,18 @@ const toUrl = (blobs) => (ref) => {
 
 export default function Content({ text, blobs }) {
   return (
-    <Text
-      overflowX={"scroll"}
-      textAlign={"left"}
-      color={useColorModeValue("polar.100", "snow.300")}
-      px={3}
-      mt={2}
-      dangerouslySetInnerHTML={{
-        __html: ssbMarkdown.block(text, { toUrl: toUrl(blobs) }),
-      }}
-    />
+    <ReactMarkdown components={ChakraUIRenderer()} children={text} skipHtml />
   );
+  // return (
+  //   <Text
+  //     overflowX={"scroll"}
+  //     textAlign={"left"}
+  //     color={useColorModeValue("polar.100", "snow.300")}
+  //     px={3}
+  //     mt={2}
+  //     dangerouslySetInnerHTML={{
+  //       __html: ssbMarkdown.block(text, { toUrl: toUrl(blobs) }),
+  //     }}
+  //   />
+  // );
 }
