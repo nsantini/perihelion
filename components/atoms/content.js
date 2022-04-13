@@ -1,10 +1,8 @@
-import { Text, useColorModeValue } from "@chakra-ui/react";
+import { Img, Link, useColorModeValue } from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
-import ssbMarkdown from "ssb-markdown";
 
-const toUrl = (blobs) => (ref) => {
-  if (!blobs) return ref;
+const toUrl = (ref, blobs) => {
   switch (ref[0]) {
     case "&":
       // its a blob
@@ -23,20 +21,25 @@ const toUrl = (blobs) => (ref) => {
   }
 };
 
+const createSsbTheme = (blobs) => {
+  return {
+    a: (props) => {
+      const { children, href } = props;
+      return <Link href={toUrl(href)}>{children}</Link>;
+    },
+    img: (props) => {
+      return <Img {...props} src={toUrl(props.src, blobs)} />;
+    },
+  };
+};
+
 export default function Content({ text, blobs }) {
+  const ssbTheme = createSsbTheme(blobs);
   return (
-    <ReactMarkdown components={ChakraUIRenderer()} children={text} skipHtml />
+    <ReactMarkdown
+      components={ChakraUIRenderer(ssbTheme)}
+      children={text}
+      skipHtml
+    />
   );
-  // return (
-  //   <Text
-  //     overflowX={"scroll"}
-  //     textAlign={"left"}
-  //     color={useColorModeValue("polar.100", "snow.300")}
-  //     px={3}
-  //     mt={2}
-  //     dangerouslySetInnerHTML={{
-  //       __html: ssbMarkdown.block(text, { toUrl: toUrl(blobs) }),
-  //     }}
-  //   />
-  // );
 }
