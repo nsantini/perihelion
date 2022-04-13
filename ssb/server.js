@@ -19,7 +19,10 @@ module.exports = () => {
     // // Connections
     .use(require("ssb-conn"))
     .use(require("ssb-lan"))
-    .use(require("ssb-invite-client"))
+    .use(require("ssb-room-client")) // needs: conn
+    .use(require("ssb-http-auth-client")) // needs: conn
+    .use(require("ssb-http-invite-client"))
+    .use(require("ssb-invite-client")) // needs: db2, conn
     // // Queries
     .use(require("ssb-threads")) // needs: db, db2, friends
     // .use(require('ssb-search2')) // needs: db2
@@ -35,6 +38,15 @@ module.exports = () => {
     replicate: {
       legacy: true,
       fallback: false,
+    },
+    connections: {
+      incoming: {
+        tunnel: [{ scope: "public", transform: "shs" }],
+      },
+      outgoing: {
+        net: [{ transform: "shs" }],
+        tunnel: [{ transform: "shs" }],
+      },
     },
   });
   return global._ssbServer;

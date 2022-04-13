@@ -1,13 +1,12 @@
 const profile = require("./profile");
-const socialGraph = require("./utils/socialGraph");
 
 module.exports = {
   getConnectedPeers: async (ssb) => {
     const connectedPeers = ssb.conn.query().peersConnected();
     const connectedPeersProfiles = await Promise.all(
-      connectedPeers.map(
-        async ([addr, data]) => await profile.getProfile(ssb, data.key)
-      )
+      connectedPeers
+        .filter(([addr, data]) => !["room", "pub"].includes(data.type))
+        .map(async ([addr, data]) => await profile.getProfile(ssb, data.key))
     );
     return connectedPeersProfiles;
   },
