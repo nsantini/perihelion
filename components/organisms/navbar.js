@@ -36,6 +36,10 @@ const Links = [
     path: "/feed/2",
   },
   {
+    label: "Private",
+    path: "/private",
+  },
+  {
     label: "Settings",
     path: "/settings",
   },
