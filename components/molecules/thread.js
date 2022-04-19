@@ -11,7 +11,10 @@ export default function Tread({ thread }) {
         </Container>
       ))}
       <Container>
-        <MessageForm root={thread.messages[0].key} />
+        <MessageForm
+          root={thread.messages[0].key}
+          recps={thread.messages[0].recps}
+        />
       </Container>
     </>
   );
