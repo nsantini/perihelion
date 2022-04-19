@@ -12,7 +12,7 @@ import Textarea from "../atoms/textarea";
 import BlobUploader from "../molecules/blobUploader";
 import Profiles from "../molecules/profiles";
 
-export default function MessageForm({ root }) {
+export default function MessageForm({ root, recps }) {
   const [postError, setPostError] = useState("");
   const [textValue, setTextValue] = useState("");
   const [name, setName] = useState("");
@@ -23,6 +23,7 @@ export default function MessageForm({ root }) {
     const data = {
       root,
       text: textValue,
+      recps,
     };
     setPostError("");
     const response = await fetch("/api/post", {

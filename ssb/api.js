@@ -6,6 +6,7 @@ const peers = require("./entities/peers");
 const blob = require("./entities/blob");
 const thread = require("./entities/thread");
 const invites = require("./entities/invites");
+const privateThreads = require("./entities/private");
 
 module.exports = {
   getProfile: async (id) => {
@@ -124,6 +125,16 @@ module.exports = {
       return invites(ssb, invite);
     } catch (err) {
       console.error("claimInvite", err);
+      throw err;
+    }
+  },
+
+  getPrivateFeed: async () => {
+    try {
+      const ssb = ssbFactory();
+      return privateThreads.getPrivateFeed(ssb);
+    } catch (err) {
+      console.error("getPrivateFeed", err);
       throw err;
     }
   },

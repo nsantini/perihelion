@@ -24,6 +24,7 @@ module.exports = async (ssb, msg) => {
     author: msg.value.author,
     timestamp: msg.value.timestamp,
     text: msg.value.content.text,
+    recps: msg.value.content.recps,
     blobs,
   };
 };
