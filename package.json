@@ -50,7 +50,7 @@
   },
   "name": "perihelion",
   "description": "This is an SSB app built with Next.js",
-  "version": "0.2204.13-beta",
+  "version": "0.2204.20-beta",
   "devDependencies": {
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
