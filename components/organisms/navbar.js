@@ -1,9 +1,12 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   Box,
   Flex,
   HStack,
-  Link,
+  Button,
   IconButton,
+  Link as ChakraLink,
   useDisclosure,
   useColorMode,
   useColorModeValue,
@@ -45,21 +48,30 @@ const Links = [
   },
 ];
 
-const NavLink = ({ children, path }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={"md"}
-    color={useColorModeValue("polar.700", "snow.300")}
-    _hover={{
-      textDecoration: "none",
-      bg: useColorModeValue("frost.500", "frost.700"),
-    }}
-    href={`${path}`}
-  >
-    {children}
-  </Link>
-);
+const NavLink = ({ children, path }) => {
+  const router = useRouter();
+  return (
+    <Link href={`${path}`}>
+      <ChakraLink
+        px={2}
+        py={1}
+        rounded={"md"}
+        color={useColorModeValue("polar.700", "snow.300")}
+        _hover={{
+          textDecoration: "none",
+          bg: useColorModeValue("frost.500", "frost.700"),
+        }}
+        bg={
+          router.asPath === path
+            ? useColorModeValue("frost.500", "frost.700")
+            : ""
+        }
+      >
+        {children}
+      </ChakraLink>
+    </Link>
+  );
+};
 
 export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
