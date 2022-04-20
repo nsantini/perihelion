@@ -1,6 +1,6 @@
 import Head from "next/head";
 import NavBar from "./organisms/navbar";
-import { Box, Container, Stack } from "@chakra-ui/react";
+import { Container, Stack } from "@chakra-ui/react";
 
 export default function Layout({ children }) {
   return (

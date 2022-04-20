@@ -8,7 +8,7 @@ export default function Container({ children }) {
       width="100%"
       direction={"column"}
       boxShadow={"lg"}
-      bg={useColorModeValue("grey.50", "polar.100")}
+      bg={useColorModeValue("snow.300", "polar.500")}
     >
       {children}
     </Flex>

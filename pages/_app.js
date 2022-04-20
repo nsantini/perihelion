@@ -28,6 +28,13 @@ const theme = extendTheme({
       900: "#B48EAD",
     },
   },
+  styles: {
+    global: (props) => ({
+      body: {
+        bg: props.colorMode === "dark" ? "polar.700" : "snow.500",
+      },
+    }),
+  },
 });
 
 function MyApp({ Component, pageProps }) {

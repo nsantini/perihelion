@@ -1,6 +1,5 @@
-import { Stack } from "@chakra-ui/react";
+import { Flex, Stack } from "@chakra-ui/react";
 import Thread from "../components/molecules/thread";
-import Container from "../components/atoms/container";
 import usePrivate from "../hooks/usePrivate";
 
 export default function FeedPage() {
@@ -13,9 +12,9 @@ export default function FeedPage() {
     <Stack>
       {threads &&
         threads.map((thread, index) => (
-          <Container key={index}>
+          <Flex key={index} mt="2" width="100%" direction={"column"}>
             <Thread thread={thread} />
-          </Container>
+          </Flex>
         ))}
     </Stack>
   );
