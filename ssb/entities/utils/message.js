@@ -1,4 +1,5 @@
 const blob = require("../blob");
+const votes = require("../votes");
 
 module.exports = async (ssb, msg) => {
   let imageLinks = [];
@@ -19,6 +20,7 @@ module.exports = async (ssb, msg) => {
       })
     );
   }
+  const voters = await votes.getVotes(ssb, msg.key);
   return {
     key: msg.key,
     author: msg.value.author,
@@ -26,5 +28,6 @@ module.exports = async (ssb, msg) => {
     text: msg.value.content.text,
     recps: msg.value.content.recps,
     blobs,
+    voters,
   };
 };

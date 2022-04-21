@@ -20,13 +20,6 @@ const collector = (ssb, resolve, reject) => {
             return {
               messages,
             };
-
-            const root = await processMsg(ssb, thread.root);
-
-            return {
-              messages: [root],
-              replyCount: thread.replyCount,
-            };
           })
         )
       );
