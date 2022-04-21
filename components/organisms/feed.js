@@ -17,7 +17,7 @@ export default function Feed({ hops }) {
             <Link
               color={useColorModeValue("frost.700", "frost.500")}
               mt="2"
-              href={`/thread/${encodeURIComponent(thread.messages[0].key)}`}
+              href={`/thread/${encodeURIComponent(thread.messages[0].msgId)}`}
             >
               {thread.replyCount} replies
             </Link>
