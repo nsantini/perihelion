@@ -7,6 +7,7 @@ const blob = require("./entities/blob");
 const thread = require("./entities/thread");
 const invites = require("./entities/invites");
 const privateThreads = require("./entities/private");
+const votes = require("./entities/votes");
 
 module.exports = {
   getProfile: async (id) => {
@@ -135,6 +136,16 @@ module.exports = {
       return privateThreads.getPrivateFeed(ssb);
     } catch (err) {
       console.error("getPrivateFeed", err);
+      throw err;
+    }
+  },
+
+  vote: async (msgId) => {
+    try {
+      const ssb = ssbFactory();
+      return votes.vote(ssb, msgId);
+    } catch (err) {
+      console.error("vote", err);
       throw err;
     }
   },

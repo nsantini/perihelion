@@ -22,7 +22,7 @@ module.exports = async (ssb, msg) => {
   }
   const voters = await votes.getVotes(ssb, msg.key);
   return {
-    key: msg.key,
+    msgId: msg.key,
     author: msg.value.author,
     timestamp: msg.value.timestamp,
     text: msg.value.content.text,

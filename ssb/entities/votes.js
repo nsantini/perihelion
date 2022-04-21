@@ -40,5 +40,29 @@ module.exports = {
 
     return voters;
   },
-  vote: async (ssb, msgId) => {},
+  vote: async (ssb, msgId) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        ssb.db.publish(
+          {
+            timestamp: Date.now(),
+            author: ssb.id,
+            type: "vote",
+            vote: {
+              link: msgId,
+              value: 1,
+            },
+          },
+          (err, kvt) => {
+            if (err) {
+              return reject(err);
+            }
+            resolve(kvt);
+          }
+        );
+      } catch (err) {
+        reject(err);
+      }
+    });
+  },
 };
