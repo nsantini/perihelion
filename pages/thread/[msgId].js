@@ -7,14 +7,14 @@ export default function Feed() {
   const router = useRouter();
 
   const { msgId } = router.query;
-  const { thread, isLoading, isError } = useThread(msgId);
+  const { thread, isLoading, isError, mutate } = useThread(msgId);
 
   if (isError) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
 
   return (
     <Stack>
-      <Thread thread={thread} />
+      <Thread thread={thread} mutate={mutate} />
     </Stack>
   );
 }

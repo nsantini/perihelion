@@ -1,3 +1,4 @@
+const processMsg = require("./utils/message");
 module.exports = async (ssb, message) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -12,7 +13,7 @@ module.exports = async (ssb, message) => {
           if (err) {
             return reject(err);
           }
-          resolve(kvt);
+          resolve(processMsg(ssb, kvt));
         }
       );
     } catch (err) {

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Heading, Link, Stack } from "@chakra-ui/react";
 import Button from "../atoms/button";
 import Avatar from "../atoms/avatar";
@@ -7,8 +6,7 @@ import Container from "../atoms/container";
 import useProfile from "../../hooks/profile";
 
 export default function Profile({ feedId, short }) {
-  const { profile, isLoading, isError } = useProfile(feedId);
-  //const [following, setFollowing] = useState(profile.following);
+  const { profile, isLoading, isError, mutate } = useProfile(feedId);
 
   if (isError) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
@@ -26,7 +24,7 @@ export default function Profile({ feedId, short }) {
       }),
     });
     const data = await response.json();
-    // if (response.ok) setFollowing(data.following);
+    if (response.ok) mutate({ ...profile, following: !profile.following });
   };
 
   return (
@@ -34,7 +32,9 @@ export default function Profile({ feedId, short }) {
       <Stack align={"center"}>
         <Avatar image={profile.imageBlob} />
         <Heading fontSize={"2xl"} fontFamily={"body"}>
-          {profile.name}
+          <Link href={`/profile/${encodeURIComponent(feedId)}`}>
+            {profile.name}
+          </Link>
         </Heading>
         {!short && <Content text={profile.description} />}
         {!profile.following && <Button onClick={updateState}>Follow</Button>}
