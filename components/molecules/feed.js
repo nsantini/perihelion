@@ -1,13 +1,8 @@
 import { Center, Link, useColorModeValue } from "@chakra-ui/react";
 import Container from "../atoms/container";
-import MessageCard from "../molecules/message";
-import useFeed from "../../hooks/feed";
+import MessageCard from "./message";
 
-export default function Feed({ hops }) {
-  const { feed, isLoading, isError } = useFeed(hops);
-
-  if (isError) return <div>Failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
+export default function Feed({ feed }) {
   return (
     <>
       {feed.map((thread, index) => (
