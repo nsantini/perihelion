@@ -2,7 +2,7 @@ import useSWR from "swr";
 import fetcher from "./utils/fetcher";
 
 export default function useThread(msgId) {
-  const { data, error } = useSWR(
+  const { data, error, mutate } = useSWR(
     `/api/thread/${encodeURIComponent(msgId)}`,
     fetcher
   );
@@ -11,5 +11,6 @@ export default function useThread(msgId) {
     thread: data,
     isLoading: !error && !data,
     isError: error,
+    mutate,
   };
 }

@@ -2,7 +2,7 @@ import useSWR from "swr";
 import fetcher from "./utils/fetcher";
 
 export default function useProfile(feedId) {
-  const { data, error } = useSWR(
+  const { data, error, mutate } = useSWR(
     `/api/profile/${feedId ? encodeURIComponent(feedId) : "self"}`,
     fetcher
   );
@@ -11,5 +11,6 @@ export default function useProfile(feedId) {
     profile: data,
     isLoading: !error && !data,
     isError: error,
+    mutate,
   };
 }

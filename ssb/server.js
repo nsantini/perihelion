@@ -5,6 +5,9 @@ const caps = require("ssb-caps");
 module.exports = () => {
   if (global._ssbServer) return global._ssbServer;
   console.log("Starting SSB server");
+  process.on("uncaughtException", function (err) {
+    console.error(err);
+  });
   const ssb = SecretStack({ caps })
     // Core
     .use(require("ssb-master"))
