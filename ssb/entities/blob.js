@@ -44,7 +44,7 @@ module.exports = {
         const mimeType = mime.getType(file.path);
         let link = "";
         if (mimeType.startsWith("image/")) {
-          link = `\n![${file.originalFilename}](${hash})`;
+          link = `\n![image:${file.originalFilename}](${hash})`;
         } else if (mimeType.startsWith("audio/")) {
           link = `\n![audio:${file.originalFilename}](${hash})`;
         } else if (mimeType.startsWith("video/")) {

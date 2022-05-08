@@ -9,14 +9,20 @@ module.exports = async (ssb, msg) => {
   if (matches) {
     imageLinks = matches
       .filter((match) => match && match[2][0] === "&")
-      .map((match) => match[2]);
+      .map((match) => {
+        return {
+          title: match[1],
+          ref: match[2],
+        };
+      });
     blobs = await Promise.all(
       imageLinks.map(async (link) => {
-        const b = {
-          link,
-          blob: await blob.getBlob(ssb, link),
+        return {
+          link: link.ref,
+          blob: await blob.getBlob(ssb, link.ref),
+          title: link.title,
+          mimeType: link.title.substring(0, link.title.indexOf(":")),
         };
-        return b;
       })
     );
   }
