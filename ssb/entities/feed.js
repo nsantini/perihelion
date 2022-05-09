@@ -75,7 +75,7 @@ module.exports = {
   getPublicFeed: async (ssb, hops) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const maxMessages = 20;
+        const maxMessages = 50;
         const socialFilterInstance = await socialFilter(ssb, hops);
         pull(
           ssb.threads.publicSummary({ allowlist: ["post", "blog"] }),
