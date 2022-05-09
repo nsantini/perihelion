@@ -1,6 +1,7 @@
 import { Img, Link, useColorModeValue } from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
+import Media from "./media";
 
 const toUrl = (ref, blob) => {
   switch (ref[0]) {
@@ -29,34 +30,7 @@ const createSsbTheme = (blobs) => {
       );
     },
     img: (props) => {
-      const blob = (blobs || []).find((b) => b.link === props.src);
-      if (!blob) {
-        return <Img {...props} src={props.src} />;
-      }
-      switch (blob.mimeType) {
-        case "video":
-          return (
-            <video
-              controls
-              src={`data:video/mp4;base64,${toUrl(props.src, blob)}`}
-            />
-          );
-        case "audio":
-          return (
-            <audio
-              controls
-              src={`data:audio/mpeg;base64,${toUrl(props.src, blob)}`}
-            />
-          );
-        case "image":
-        default:
-          return (
-            <Img
-              {...props}
-              src={`data:image/png;base64,${toUrl(props.src, blob)}`}
-            />
-          );
-      }
+      return <Media {...props} />;
     },
   };
 };
