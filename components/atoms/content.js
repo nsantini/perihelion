@@ -6,6 +6,7 @@ import Media from "./media";
 const toUrl = (ref, blob) => {
   switch (ref[0]) {
     case "&":
+      if (!blob) return ref;
       return Buffer.from(blob.blob || "");
     case "@":
       // its a feed
