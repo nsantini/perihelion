@@ -7,7 +7,7 @@ module.exports = async (ssb, msg) => {
     const blog = await blob.getBlob(ssb, msg.value.content.blog);
     text = `# ${msg.value.content.title}\n\n> ${
       msg.value.content.summary
-    }\n\n---\n${Buffer.from(blog || "", "base64").toString("ascii")})`;
+    }\n\n---\n${Buffer.from(blog || "", "base64").toString("utf-8")})`;
   }
   const voters = await votes.getVotes(ssb, msg.key);
   return {
