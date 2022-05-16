@@ -4,7 +4,7 @@ import MessageForm from "../organisms/messageForm";
 
 export default function Tread({ thread, mutate }) {
   const newMesssage = (msg) => {
-    mutate({ ...thread, messages: [msg, ...thread.messages] });
+    mutate && mutate({ ...thread, messages: [msg, ...thread.messages] });
   };
   return (
     <>
