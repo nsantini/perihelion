@@ -5,8 +5,8 @@ export default function Button({ children, onClick }) {
     <ChakraButton
       w={"full"}
       maxW={"320px"}
-      bgColor={useColorModeValue("frost.700", "frost.500")}
-      color={useColorModeValue("snow.500", "snow.500")}
+      bgColor={"frost.700"}
+      color={"snow.500"}
       rounded={"md"}
       type="submit"
       onClick={onClick}

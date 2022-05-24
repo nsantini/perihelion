@@ -25,7 +25,8 @@ export default function BlobUploader({ blobUloaded }) {
         onChange={(e) => onSubmit(e.target.files[0])}
       />
       <IconButton
-        bgColor={useColorModeValue("frost.300", "frost.100")}
+        bgColor={"frost.500"}
+        color={"snow.500"}
         mt={2}
         onClick={() => hiddenInput.click()}
         icon={<AttachmentIcon />}

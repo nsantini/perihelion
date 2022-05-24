@@ -56,16 +56,12 @@ const NavLink = ({ children, path }) => {
         px={2}
         py={1}
         rounded={"md"}
-        color={useColorModeValue("polar.700", "snow.300")}
+        color={"snow.500"}
         _hover={{
           textDecoration: "none",
-          bg: useColorModeValue("frost.500", "frost.700"),
+          bg: "frost.100",
         }}
-        bg={
-          router.asPath === path
-            ? useColorModeValue("frost.500", "frost.700")
-            : ""
-        }
+        bg={router.asPath === path ? "frost.100" : "frost.700"}
       >
         {children}
       </ChakraLink>
@@ -77,7 +73,7 @@ export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box bg={useColorModeValue("snow.100", "polar.300")} px={4}>
+    <Box bg={useColorModeValue("snow.500", "polar.700")} px={4}>
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
         <IconButton
           size={"md"}

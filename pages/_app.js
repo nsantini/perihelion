@@ -31,7 +31,7 @@ const theme = extendTheme({
   styles: {
     global: (props) => ({
       body: {
-        bg: props.colorMode === "dark" ? "polar.700" : "snow.500",
+        bg: props.colorMode === "dark" ? "polar.300" : "snow.100",
       },
     }),
   },
