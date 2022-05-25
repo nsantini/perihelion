@@ -3,7 +3,7 @@ import useBlob from "../../hooks/blob";
 export default function Media(props) {
   const { blob, isLoading, isError } = useBlob(props.src);
   if (isError) return <div>Failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading {props.src}</div>;
   const mime = props.alt.substring(0, props.alt.indexOf(":"));
   switch (mime) {
     case "video":
