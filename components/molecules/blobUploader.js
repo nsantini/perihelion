@@ -1,4 +1,4 @@
-import { IconButton, useColorModeValue } from "@chakra-ui/react";
+import { IconButton } from "@chakra-ui/react";
 import { AttachmentIcon } from "@chakra-ui/icons";
 
 export default function BlobUploader({ blobUloaded }) {

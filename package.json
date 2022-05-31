@@ -30,7 +30,7 @@
     "ssb-caps": "^1.1.0",
     "ssb-config": "^3.4.6",
     "ssb-conn": "^6.0.1",
-    "ssb-db2": "^3.1.0",
+    "ssb-db2": "^4.1.2",
     "ssb-ebt": "^8.1.1",
     "ssb-friends": "^5.1.1",
     "ssb-http-auth-client": "^1.1.1",

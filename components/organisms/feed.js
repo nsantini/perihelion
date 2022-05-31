@@ -9,6 +9,7 @@ export default function Feed({ hops }) {
 
   if (isError) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
+  if (!isLoading && (!feed || !feed.map)) return <div>No data found</div>;
 
   const newMesssage = (msg) => {
     mutate([{ replyCount: 0, messages: [msg] }, ...feed]);
@@ -19,7 +20,7 @@ export default function Feed({ hops }) {
       <Container>
         <MessageForm newMesssage={newMesssage} />
       </Container>
-      {feed.map((thread, index) => (
+      {(feed||[]).map((thread, index) => (
         <Container key={index}>
           <MessageCard {...thread.messages[0]} />
           <Center>
