@@ -14,6 +14,7 @@ export default function Textarea({ name, placeholder, value, onChange }) {
       value={value}
       onChange={onChange}
       placeholder={placeholder}
+      rows={10}
     />
   );
 }

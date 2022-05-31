@@ -1,4 +1,4 @@
-import { Img, Link, useColorModeValue } from "@chakra-ui/react";
+import { Link } from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
 import Media from "./media";

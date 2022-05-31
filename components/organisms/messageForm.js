@@ -1,22 +1,34 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
   Center,
   Text,
   Link,
   useDisclosure,
   useColorModeValue,
   Stack,
+  IconButton,
 } from "@chakra-ui/react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import Button from "../atoms/button";
 import Textarea from "../atoms/textarea";
+import Content from "../atoms/content";
 import BlobUploader from "../molecules/blobUploader";
 import Profiles from "../molecules/profiles";
 
 export default function MessageForm({ root, recps, newMesssage }) {
   const [postError, setPostError] = useState("");
   const [textValue, setTextValue] = useState("");
+  const [preview, setPreview] = useState(false);
   const [name, setName] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = React.useRef();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +51,7 @@ export default function MessageForm({ root, recps, newMesssage }) {
       setPostError(data.error);
     } else {
       setTextValue("");
-      root && onClose();
+      onClose();
       newMesssage(data);
     }
   };
@@ -58,54 +70,82 @@ export default function MessageForm({ root, recps, newMesssage }) {
   };
 
   const insertMention = (original, mention) => {
-    setTextValue(textValue.replace("@" + original, mention));
+    setTextValue(textValue.replace(original, mention));
   };
 
   return (
     <>
-      {(isOpen || !root) && (
-        <>
-          <form onSubmit={onSubmit}>
-            <Textarea
-              placeholder="Write your message here"
-              name="text"
-              value={textValue}
-              onChange={(e) => {
-                setTextValue(e.target.value);
-                filterProfiles(e.target.value);
-              }}
-            />
-            {name && <Profiles name={name} onSelect={insertMention} />}
-
-            {postError && (
-              <Text color="tomato" mt="2">
-                {postError}
-              </Text>
-            )}
-            <Center>
-              <Stack direction="row">
-                <Center>
-                  <Button>Post message</Button>
-                </Center>
-                <Center>
-                  <BlobUploader blobUloaded={blobUloaded} />
-                </Center>
-              </Stack>
-            </Center>
-          </form>
-        </>
-      )}
-      {!isOpen && root && (
+      {!isOpen && (
         <Center>
           <Link
             color={useColorModeValue("frost.700", "frost.500")}
             mt="2"
-            onClick={isOpen ? onClose : onOpen}
+            onClick={onOpen}
           >
-            Reply to thread
+            Post message
           </Link>
         </Center>
       )}
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        isCentered
+        scrollBehavior={"inside"}
+        size={"3xl"}
+        initialFocusRef={initialRef}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Post message</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {!preview && (
+              <form onSubmit={onSubmit}>
+                <Textarea
+                  ref={initialRef}
+                  placeholder="Write your message here"
+                  name="text"
+                  value={textValue}
+                  onChange={(e) => {
+                    setTextValue(e.target.value);
+                    filterProfiles(e.target.value);
+                  }}
+                />
+                {name && <Profiles name={name} onSelect={insertMention} />}
+
+                {postError && (
+                  <Text color="tomato" mt="2">
+                    {postError}
+                  </Text>
+                )}
+              </form>
+            )}
+            {preview && <Content text={textValue} />}
+          </ModalBody>
+          <ModalFooter>
+            <Center>
+              <Stack direction="row">
+                <Center>
+                  <Button onClick={onSubmit}>Post</Button>
+                </Center>
+                <Center>
+                  <BlobUploader blobUloaded={blobUloaded} />
+                </Center>
+                <Center>
+                  <IconButton
+                    isDisabled={!textValue}
+                    bgColor={"frost.500"}
+                    color={"snow.500"}
+                    mt={2}
+                    onClick={() => setPreview(!preview)}
+                    icon={preview ? <ViewOffIcon /> : <ViewIcon />}
+                  />
+                </Center>
+              </Stack>
+            </Center>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }
