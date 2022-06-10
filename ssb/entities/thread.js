@@ -2,7 +2,7 @@ const pull = require("pull-stream");
 
 const processMsg = require("./utils/message");
 
-module.exports = async (ssb, msgId) => {
+const loadThread = async (ssb, msgId) => {
   return new Promise(async (resolve, reject) => {
     try {
       pull(
@@ -11,6 +11,10 @@ module.exports = async (ssb, msgId) => {
           const messages = await Promise.all(
             (thread.messages || []).map(async (message) => {
               const processed = await processMsg(ssb, message);
+              if (msgId !== processed.msgId) {
+                const replies = await loadThread(ssb, processed.msgId);
+                processed.replies = replies.messages.length - 1;
+              }
               return processed;
             })
           );
@@ -21,7 +25,12 @@ module.exports = async (ssb, msgId) => {
         })
       );
     } catch (err) {
+      console.error(err);
       reject(err);
     }
   });
+};
+
+module.exports = async (ssb, msgId) => {
+  return loadThread(ssb, msgId);
 };
