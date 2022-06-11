@@ -22,12 +22,12 @@ const socialFilter = async (ssb, hops) => {
     if (blockingList.includes(thread.root.value.author)) {
       return false;
     }
-    if (thread.root.value.author === id) {
+    if (hops <= 1 && thread.root.value.author === id) {
       return true;
-    } else if (hops === 1) {
+    } else if (hops <= 1) {
       return followingList.includes(thread.root.value.author);
-    } else if (hops > 1) {
-      return true;
+    } else if (hops > 1 && thread.root.value.author !== id) {
+      return !followingList.includes(thread.root.value.author);
     }
   });
 };
