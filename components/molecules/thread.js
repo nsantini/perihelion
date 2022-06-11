@@ -1,4 +1,6 @@
+import { Center, Link, useColorModeValue } from "@chakra-ui/react";
 import Container from "../atoms/container";
+import RepliesLink from "../atoms/repliesLink";
 import MessageCard from "./message";
 import MessageForm from "../organisms/messageForm";
 
@@ -11,6 +13,9 @@ export default function Tread({ thread, mutate }) {
       {thread.messages.map((post, index) => (
         <Container key={index}>
           <MessageCard {...post} index={index} />
+          {post.replies > 0 && (
+            <RepliesLink msgId={post.msgId} replyCount={post.replies} />
+          )}
         </Container>
       ))}
       <Container>

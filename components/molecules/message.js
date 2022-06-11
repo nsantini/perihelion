@@ -2,7 +2,6 @@ import {
   IconButton,
   Flex,
   Text,
-  Link,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -10,30 +9,8 @@ import {
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import Content from "../atoms/content";
+import Voter from "../atoms/voter";
 import Author from "./author";
-import Avatar from "../atoms/avatar";
-import useProfile from "../../hooks/profile";
-
-function Voter({ profileId }) {
-  const { profile, isLoading, isError } = useProfile(profileId);
-  if (isError) return <div>Failed to load user details</div>;
-  if (isLoading) return <div>Loading...</div>;
-  return (
-    <Flex direction={"row"} textAlign={"left"} p={1}>
-      <Avatar image={profile.imageBlob} size={"sm"} />
-      <Link
-        ml={2}
-        pt={1}
-        fontFamily={"Work Sans"}
-        fontWeight={"bold"}
-        fontSize={16}
-        href={`/profile/${encodeURIComponent(profile.id)}`}
-      >
-        {profile.name}
-      </Link>
-    </Flex>
-  );
-}
 
 export default function MessageCard(props) {
   const { author, timestamp, text, blobs, index, voters, msgId } = props;
