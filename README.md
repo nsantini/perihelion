@@ -30,3 +30,14 @@ npm start
 It's important to know that Perihelion uses `ssb-db2`, which means is not compatible with the likes of Patchwork and other similar clients.
 
 Also, it relies on `ssb-ebt` for replication. And I haven't managed to get it replicating using the legacy `ssb-replicate` yet.
+
+## Support for Apple M1 hardware
+
+As mentioned in this [GitHub issue](https://github.com/ssbc/ssb-validate2-rsjs-node/issues/18#issuecomment-1140326214), there is a workaround to get it working.
+
+Here are the steps after doing `npm install`
+
+- Install rust following https://www.rust-lang.org/tools/install
+- Run `cargo install nj-cli`
+- Inside the node folder `node_modules/ssb-validate2-rsjs-node`, run `npm run build`
+- Then you will be able to run Perihelion without issues
