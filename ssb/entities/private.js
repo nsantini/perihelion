@@ -10,6 +10,7 @@ const collector = (ssb, resolve, reject) => {
       resolve(
         await Promise.all(
           collectedThreads.map(async (thread) => {
+            const replyCount = (thread.messages || []).length;
             const messages = await Promise.all(
               (thread.messages || []).map(async (message) => {
                 const processed = await processMsg(ssb, message);
@@ -35,6 +36,7 @@ module.exports = {
         pull(
           ssb.threads.private({
             allowlist: ["post", "blog"],
+            threadMaxSize: 0,
           }),
           pull.take(maxMessages),
           pull.collect(collector(ssb, resolve, reject))

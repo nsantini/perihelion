@@ -1,4 +1,3 @@
-import { Center, Link, useColorModeValue } from "@chakra-ui/react";
 import Container from "../atoms/container";
 import RepliesLink from "../atoms/repliesLink";
 import MessageCard from "./message";
