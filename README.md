@@ -8,7 +8,7 @@ It uses [Next.js](https://nextjs.org/) and other "modern" web development tools.
 
 ## Installation
 
-If you want to run Perihelion, you will have to clone this repository and then:
+If you want to run Perihelion, you will have to clone this repository, install [Node.js](https://nodejs.org/en/) (tested on Node 14), and then:
 
 ```
 npm install
