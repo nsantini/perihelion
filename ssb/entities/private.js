@@ -10,8 +10,11 @@ const collector = (ssb, resolve, reject) => {
       resolve(
         await Promise.all(
           collectedThreads.map(async (thread) => {
+            thread.messages = thread.messages || [];
+            const replyCount = thread.messages.length;
+            thread.messages.slice(0, 1);
             const messages = await Promise.all(
-              (thread.messages || []).map(async (message) => {
+              thread.messages.map(async (message) => {
                 const processed = await processMsg(ssb, message);
                 return processed;
               })
@@ -19,6 +22,7 @@ const collector = (ssb, resolve, reject) => {
 
             return {
               messages,
+              replyCount,
             };
           })
         )

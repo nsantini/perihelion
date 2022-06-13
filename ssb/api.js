@@ -100,10 +100,10 @@ module.exports = {
     }
   },
 
-  getThread: async (msgId) => {
+  getThread: async (msgId, isPrivate) => {
     try {
       const ssb = ssbFactory();
-      return thread(ssb, msgId);
+      return thread(ssb, msgId, isPrivate);
     } catch (err) {
       console.error("getThread", err);
       throw err;
