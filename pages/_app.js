@@ -1,5 +1,6 @@
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import Layout from "../components/layout";
+import Fonts from "../theme/fonts";
 
 const theme = extendTheme({
   colors: {
@@ -28,10 +29,17 @@ const theme = extendTheme({
       900: "#B48EAD",
     },
   },
+  fonts: {
+    body: `'iA Writer Duo Regular'`,
+    heading: `'iA Writer Quattro Bold'`,
+    mono: `'iA Writer Mono Regular'`,
+  },
   styles: {
     global: (props) => ({
       body: {
         bg: props.colorMode === "dark" ? "polar.300" : "snow.100",
+        color: props.colorMode === "dark" ? "snow.100" : "polar.300",
+        fontSize: "20px",
       },
     }),
   },
