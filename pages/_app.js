@@ -32,7 +32,7 @@ const theme = extendTheme({
   fonts: {
     body: `'iA Writer Duo Regular'`,
     heading: `'iA Writer Quattro Bold'`,
-    mono: `'iA Writer Mono Regular'`,
+    mono: `'iA Writer Mono Italic'`,
   },
   styles: {
     global: (props) => ({
@@ -48,6 +48,7 @@ const theme = extendTheme({
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
+      <Fonts />
       <Layout>
         <Component {...pageProps} />
       </Layout>
