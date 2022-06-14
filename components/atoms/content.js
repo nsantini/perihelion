@@ -1,4 +1,4 @@
-import { Link } from "@chakra-ui/react";
+import { Link, Text, useColorModeValue } from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
 import Media from "./media";
@@ -32,6 +32,18 @@ const createSsbTheme = (blobs) => {
     },
     img: (props) => {
       return <Media {...props} />;
+    },
+    blockquote: (props) => {
+      return (
+        <Text
+          fontSize={"18px"}
+          fontFamily={"var(--chakra-fonts-mono)"}
+          bg={useColorModeValue("snow.100", "polar.300")}
+          p={2}
+        >
+          {props.children}
+        </Text>
+      );
     },
   };
 };
