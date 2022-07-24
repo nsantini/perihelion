@@ -1,6 +1,7 @@
 const pull = require("pull-stream");
 const processMsg = require("./utils/message");
 const socialGraph = require("./utils/socialGraph");
+const maxMessages = 20;
 
 /**
  * Returns a function that filters messages based on who published the message.
@@ -32,7 +33,7 @@ const socialFilter = async (ssb, hops) => {
   });
 };
 
-const collector = (ssb, resolve, reject) => {
+const collector = (ssb, page, resolve, reject) => {
   return async (err, collectedThreads) => {
     if (err) {
       console.error("get latests posts", err);
@@ -40,14 +41,16 @@ const collector = (ssb, resolve, reject) => {
     } else {
       resolve(
         await Promise.all(
-          collectedThreads.map(async (thread) => {
-            const root = await processMsg(ssb, thread.root);
+          collectedThreads
+            .slice((page - 1) * maxMessages)
+            .map(async (thread) => {
+              const root = await processMsg(ssb, thread.root);
 
-            return {
-              messages: [root],
-              replyCount: thread.replyCount,
-            };
-          })
+              return {
+                messages: [root],
+                replyCount: thread.replyCount,
+              };
+            })
         )
       );
     }
@@ -55,33 +58,31 @@ const collector = (ssb, resolve, reject) => {
 };
 
 module.exports = {
-  getProfileFeed: async (ssb, feedId) => {
+  getProfileFeed: async (ssb, feedId, page = 1) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const maxMessages = 20;
         pull(
           ssb.threads.profileSummary({
             id: feedId,
             allowlist: ["post", "blog"],
           }),
-          pull.take(maxMessages),
-          pull.collect(collector(ssb, resolve, reject))
+          pull.take(maxMessages * page),
+          pull.collect(collector(ssb, page, resolve, reject))
         );
       } catch (err) {
         reject(err);
       }
     });
   },
-  getPublicFeed: async (ssb, hops) => {
+  getPublicFeed: async (ssb, hops, page = 1) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const maxMessages = 20;
         const socialFilterInstance = await socialFilter(ssb, hops);
         pull(
           ssb.threads.publicSummary({ allowlist: ["post", "blog"] }),
           socialFilterInstance,
-          pull.take(maxMessages),
-          pull.collect(collector(ssb, resolve, reject))
+          pull.take(maxMessages * page),
+          pull.collect(collector(ssb, page, resolve, reject))
         );
       } catch (err) {
         reject(err);
