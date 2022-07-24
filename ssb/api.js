@@ -40,20 +40,20 @@ module.exports = {
     }
   },
 
-  getThreads: async (hops) => {
+  getThreads: async (hops, page) => {
     try {
       const ssb = ssbFactory();
-      return feed.getPublicFeed(ssb, hops);
+      return feed.getPublicFeed(ssb, hops, page);
     } catch (err) {
       console.error("getThreads", err);
       throw err;
     }
   },
 
-  getProfileThreads: async (feedId) => {
+  getProfileThreads: async (feedId, page) => {
     try {
       const ssb = ssbFactory();
-      return feed.getProfileFeed(ssb, feedId);
+      return feed.getProfileFeed(ssb, feedId, page);
     } catch (err) {
       console.error("getProfileThreads", err);
       throw err;

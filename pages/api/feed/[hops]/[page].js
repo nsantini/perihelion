@@ -3,7 +3,6 @@ import ssbApi from "../../../../ssb/api";
 export default async function handler(req, res) {
   try {
     const { hops, page } = req.query;
-    console.log(page);
     const threads = isNaN(hops)
       ? await ssbApi.getProfileThreads(hops, parseInt(page))
       : await ssbApi.getThreads(parseInt(hops), parseInt(page));
