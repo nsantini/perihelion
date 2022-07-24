@@ -50,6 +50,8 @@ const Links = [
 
 const NavLink = ({ children, path }) => {
   const router = useRouter();
+  const isCurrentPath =
+    path === "/" ? router.asPath === path : router.asPath.includes(path);
   return (
     <Link href={`${path}`}>
       <ChakraLink
@@ -61,7 +63,7 @@ const NavLink = ({ children, path }) => {
           textDecoration: "none",
           bg: "frost.100",
         }}
-        bg={router.asPath === path ? "frost.100" : "frost.700"}
+        bg={isCurrentPath ? "frost.100" : "frost.700"}
       >
         {children}
       </ChakraLink>
