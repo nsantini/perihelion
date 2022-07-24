@@ -3,6 +3,6 @@ import Feed from "../../components/organisms/feed";
 
 export default function FeedPage() {
   const router = useRouter();
-  const { hops } = router.query;
-  return <Feed hops={hops} />;
+  const { hops, page = 1 } = router.query;
+  return <Feed hops={hops} page={page} />;
 }

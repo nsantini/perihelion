@@ -5,8 +5,8 @@ import Container from "../atoms/container";
 import useFeed from "../../hooks/feed";
 import RepliesLink from "../atoms/repliesLink";
 
-export default function Feed({ hops }) {
-  const { feed, isLoading, isError, mutate } = useFeed(hops);
+export default function Feed({ hops, page }) {
+  const { feed, isLoading, isError, mutate } = useFeed(hops, page);
 
   if (isError) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
