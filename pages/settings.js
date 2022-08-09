@@ -44,7 +44,7 @@ export default function Settings() {
   return (
     <Stack>
       <Heading color={useColorModeValue("polar.100", "snow.100")} as="h2">
-        Perihellion Settings
+        Perihelion Settings
       </Heading>
       <Container>
         <Text color={useColorModeValue("polar.100", "snow.100")} fontSize="2xl">
