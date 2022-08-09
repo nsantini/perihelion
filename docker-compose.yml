@@ -1,0 +1,53 @@
+version: '3'
+
+x-shared-config:
+  nodejs:
+    &nodejs
+    image: ${NODEJS_CONTAINER_IMAGE}
+    user: ${NODEJS_USER}
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: ${APP_ENV}
+    volumes:
+      - ./:/home/node/project
+    working_dir: /home/node/project
+
+services:
+  app:
+    <<: *nodejs
+    container_name: ${PROJECT_NAME}_${APP_SERVER_NAME}
+    depends_on:
+      - caddy
+    command: ${APP_COMMAND}
+    environment:
+      NODE_ENV: ${APP_ENV}
+
+  dev:
+    <<: *nodejs
+    container_name: ${PROJECT_NAME}_${APP_SERVER_NAME}
+    depends_on:
+      - caddy
+    command: ${DEV_COMMAND}
+    environment:
+      NODE_ENV: ${DEV_ENV}
+
+  caddy:
+    container_name: ${PROJECT_NAME}_${CADDY_SERVER_NAME}
+    environment:
+      APP_CONTAINER: ${PROJECT_NAME}_${APP_SERVER_NAME}
+    env_file:
+      - .env
+    image: ${CADDY_CONTAINER_IMAGE}
+    ports:
+      - 443:443
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+
+volumes:
+  caddy_data:
+
+networks:
+  default:
+    name: ${PROJECT_NAME}_network

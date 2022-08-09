@@ -41,3 +41,22 @@ Here are the steps after doing `npm install`
 - Run `cargo install nj-cli`
 - Inside the node folder `node_modules/ssb-validate2-rsjs-node`, run `npm run build`
 - Then you will be able to run Perihelion without issues
+
+## Using with Docker
+
+A `docker-compose.yml` file is provided.
+
+Note that this setup uses Caddy with only local certs so you'll have to bypass the insecure domain cert locally. Actual certs should be set up for a public instance.
+
+### Running in Dev Mode
+
+- Install packages: `docker-compose run --rm dev npm install`
+- Run app: `docker-compose up dev -d` Or remove `-d` for console output.
+- Access the app at `https://perihelion.lvh.me/`
+
+### Running in Production Mode
+
+- Install packages: `docker-compose run --rm app npm install`
+- Build production site: `docker-compose run --rm app npm run build`
+- Run app: `docker-compose up app -d`
+- Access the app at `https://perihelion.lvh.me/`
