@@ -1,0 +1,8 @@
+{
+  local_certs
+}
+
+{$APP_DOMAIN} {
+  encode gzip
+  reverse_proxy {$APP_CONTAINER}:3000
+}
