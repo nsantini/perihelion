@@ -8,9 +8,9 @@ export default function Peers() {
   if (isLoading) return <div>Loading...</div>;
   return (
     <SimpleGrid columns={2}>
-      {peers.map((peer) => (
-        <Profile feedId={peer.id} short={true} />
-      ))}
+      {peers &&
+        peers.map &&
+        peers.map((peer) => <Profile feedId={peer.id} short={true} />)}
     </SimpleGrid>
   );
 }

@@ -21,6 +21,7 @@ export default function FeedPage() {
         <MessageForm newMesssage={newMesssage} />
       </Container>
       {threads &&
+        threads.map &&
         threads.map((thread, index) => (
           <Container key={index}>
             <MessageCard {...thread.messages[0]} />
