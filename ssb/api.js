@@ -120,6 +120,16 @@ module.exports = {
     }
   },
 
+  updateBlock: async (feedId, currentState) => {
+    try {
+      const ssb = ssbFactory();
+      return peers.updateBlock(ssb, feedId, currentState);
+    } catch (err) {
+      console.error("updateBlock", err);
+      throw err;
+    }
+  },
+
   claimInvite: async (invite) => {
     try {
       const ssb = ssbFactory();

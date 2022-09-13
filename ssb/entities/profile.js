@@ -56,6 +56,8 @@ module.exports = {
           const graph = await socialGraph.getSocialGraph(ssb);
           profile.following =
             graph[ssb.id][feedId] === socialGraph.weightings.following;
+          profile.blocking =
+            graph[ssb.id][feedId] === socialGraph.weightings.blocking;
         }
         resolve(profile);
       } catch (err) {
