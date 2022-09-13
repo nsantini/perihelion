@@ -22,4 +22,16 @@ module.exports = {
       });
     });
   },
+  updateBlock: async (ssb, feedId, currentState) => {
+    const state = !currentState;
+    return new Promise((resolve, reject) => {
+      ssb.friends.block(feedId, { state }, (err) => {
+        if (err) {
+          console.error(err);
+          reject(err);
+        }
+        resolve({ following: state });
+      });
+    });
+  },
 };
