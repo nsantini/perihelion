@@ -33,6 +33,7 @@ module.exports = {
       }
     });
   },
+  getRawProfile: getProfile,
   getProfile: async (ssb, feedId) => {
     return new Promise(async (resolve, reject) => {
       try {

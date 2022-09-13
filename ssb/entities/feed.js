@@ -64,7 +64,7 @@ module.exports = {
         pull(
           ssb.threads.profileSummary({
             id: feedId,
-            allowlist: ["post", "blog"],
+            allowlist: ["post", "blog", "contact"],
           }),
           pull.take(maxMessages * page),
           pull.collect(collector(ssb, page, resolve, reject))
