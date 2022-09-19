@@ -4,12 +4,14 @@ import RepliesLink from "../components/atoms/repliesLink";
 import MessageCard from "../components/molecules/message";
 import MessageForm from "../components/organisms/messageForm";
 import usePrivate from "../hooks/usePrivate";
+import useProfile from "../hooks/profile";
 
 export default function FeedPage() {
   const { threads, isLoading, isError, mutate } = usePrivate();
+  const { profile, isLoading: isProfileLoading, isError: isProfileError } = useProfile("self");
 
-  if (isError) return <div>Failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
+  if (isError || isProfileError) return <div>Failed to load</div>;
+  if (isLoading || isProfileLoading) return <div>Loading...</div>;
 
   const newMesssage = (msg) => {
     mutate([{ replyCount: 0, messages: [msg] }, ...threads]);
@@ -18,7 +20,7 @@ export default function FeedPage() {
   return (
     <Stack>
       <Container>
-        <MessageForm newMesssage={newMesssage} />
+        <MessageForm recps={[profile.id]} newMesssage={newMesssage} isPrivate={true} />
       </Container>
       {threads &&
         threads.map &&

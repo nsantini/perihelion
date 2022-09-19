@@ -21,10 +21,12 @@ import Textarea from "../atoms/textarea";
 import Content from "../atoms/content";
 import BlobUploader from "../molecules/blobUploader";
 import Profiles from "../molecules/profiles";
+import ProfileSelection from "../molecules/profileSelection";
 
-export default function MessageForm({ root, recps, newMesssage }) {
+export default function MessageForm({ root, recps, newMesssage, isPrivate }) {
   const [postError, setPostError] = useState("");
   const [textValue, setTextValue] = useState("");
+  const [selectedRecps, setSelectedRecps] = useState(recps||[])
   const [preview, setPreview] = useState(false);
   const [name, setName] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,7 +43,7 @@ export default function MessageForm({ root, recps, newMesssage }) {
       body: JSON.stringify({
         root,
         text: textValue,
-        recps,
+        recps: selectedRecps,
       }),
     });
 
@@ -69,8 +71,11 @@ export default function MessageForm({ root, recps, newMesssage }) {
     }
   };
 
-  const insertMention = (original, mention) => {
-    setTextValue(textValue.replace(original, mention));
+  const insertMention = (profile) => {
+    setTextValue(
+      textValue.replace(name, `[${profile.name}](${profile.feedId})`)
+    );
+    setName("");
   };
 
   return (
@@ -111,7 +116,21 @@ export default function MessageForm({ root, recps, newMesssage }) {
                     filterProfiles(e.target.value);
                   }}
                 />
-                {name && <Profiles name={name} onSelect={insertMention} />}
+                {name && (
+                  <Profiles
+                    name={name}
+                    onSelect={insertMention}
+                    setName={setName}
+                  />
+                )}
+                {isPrivate && (
+                  <ProfileSelection
+                    addRecps={(profile) =>
+                      setSelectedRecps([profile.feedId, ...selectedRecps])
+                    }
+                    setName={setName}
+                  />
+                )}
 
                 {postError && (
                   <Text color="tomato" mt="2">
