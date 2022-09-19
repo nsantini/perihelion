@@ -25,7 +25,8 @@ module.exports = {
           .filter(
             (profile) =>
               profile.name && profile.name.toLowerCase().includes(name)
-          );
+          )
+          .slice(0, 10);
         resolve(profiles);
       } catch (err) {
         console.error(err);

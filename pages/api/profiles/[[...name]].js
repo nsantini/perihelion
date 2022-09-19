@@ -2,6 +2,7 @@ import ssbApi from "../../../ssb/api";
 
 export default async function handler(req, res) {
   try {
+    if (!req.query.name) return res.status(200).json([]);
     const response = await ssbApi.filterProfiles(req.query.name);
     return res.status(200).json(response);
   } catch (error) {
