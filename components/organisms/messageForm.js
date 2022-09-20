@@ -43,7 +43,7 @@ export default function MessageForm({ root, recps, newMesssage, isPrivate }) {
       body: JSON.stringify({
         root,
         text: textValue,
-        recps: selectedRecps,
+        recps: selectedRecps.length > 0 ? selectedRecps : null,
       }),
     });
 
