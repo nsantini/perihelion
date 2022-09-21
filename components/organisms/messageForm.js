@@ -15,8 +15,7 @@ import {
   Stack,
   IconButton,
 } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import Button from "../atoms/button";
+import { ViewIcon, ViewOffIcon, ArrowUpIcon } from "@chakra-ui/icons";
 import Textarea from "../atoms/textarea";
 import Content from "../atoms/content";
 import BlobUploader from "../molecules/blobUploader";
@@ -34,6 +33,7 @@ export default function MessageForm({ root, recps, newMesssage, isPrivate }) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (!textValue) setPostError("Let's not post empty messages 😅");
     setPostError("");
     const response = await fetch("/api/post", {
       method: "POST",
@@ -145,13 +145,22 @@ export default function MessageForm({ root, recps, newMesssage, isPrivate }) {
             <Center>
               <Stack direction="row">
                 <Center>
-                  <Button onClick={onSubmit}>Post</Button>
+                  <IconButton
+                    aria-label="Post message"
+                    isDisabled={!textValue}
+                    bgColor={"frost.500"}
+                    color={"snow.500"}
+                    mt={2}
+                    onClick={onSubmit}
+                    icon={<ArrowUpIcon />}
+                  />
                 </Center>
                 <Center>
                   <BlobUploader blobUloaded={blobUloaded} />
                 </Center>
                 <Center>
                   <IconButton
+                    aria-label={preview ? 'Edit' : 'Preview'}
                     isDisabled={!textValue}
                     bgColor={"frost.500"}
                     color={"snow.500"}
