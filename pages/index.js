@@ -1,6 +1,15 @@
-import { Container, Stack, Heading, Text, Box } from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import Router from "next/router";
+import { Stack, Heading, Text, Box } from "@chakra-ui/react";
 
 export default function Home() {
+
+  useEffect(() => {
+    const { pathname } = Router;
+    if (pathname === "/") {
+      Router.push("/profile/self");
+    }
+  });
   return (
     <Stack
       as={Box}

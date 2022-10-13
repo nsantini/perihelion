@@ -53,7 +53,11 @@ module.exports = {
   getProfileThreads: async (feedId, page) => {
     try {
       const ssb = ssbFactory();
-      return feed.getProfileFeed(ssb, feedId, page);
+      return feed.getProfileFeed(
+        ssb,
+        feedId === "self" ? ssb.id : feedId,
+        page
+      );
     } catch (err) {
       console.error("getProfileThreads", err);
       throw err;
