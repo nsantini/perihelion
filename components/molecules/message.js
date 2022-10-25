@@ -56,7 +56,11 @@ export default function MessageCard(props) {
           <PopoverContent>
             <PopoverBody>
               {voters.map((voter) => (
-                <Voter key={voter} profileId={voter} />
+                <Voter
+                  key={voter.key}
+                  profileId={voter.key}
+                  expression={voter.expression}
+                />
               ))}
             </PopoverBody>
           </PopoverContent>
