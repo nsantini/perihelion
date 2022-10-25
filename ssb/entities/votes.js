@@ -28,15 +28,15 @@ module.exports = {
     // { @key: 1, @key2: 0, @key3: 1 }
     // only one vote per person!
     const reducedVotes = rawVotes.reduce((acc, vote) => {
-      acc[vote.value.author] = vote.value.content.vote.value;
+      acc[vote.value.author] = vote.value.content.vote;
       return acc;
     }, {});
 
     // gets *only* the people who voted 1
-    // [ @key, @key, @key ]
+    // [ {@key, %link, value:1, expression}, ... ]
     const voters = Object.entries(reducedVotes)
-      .filter(([, value]) => value === 1)
-      .map(([key]) => key);
+      .filter(([, vote]) => vote.value === 1)
+      .map(([key, vote]) => ({key, ...vote}));
 
     return voters;
   },

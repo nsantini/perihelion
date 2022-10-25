@@ -2,10 +2,11 @@ import { Flex, Link } from "@chakra-ui/react";
 import Avatar from "./avatar";
 import useProfile from "../../hooks/profile";
 
-export default function Voter({ profileId }) {
+export default function Voter({ profileId, expression }) {
   const { profile, isLoading, isError } = useProfile(profileId);
   if (isError) return <div>Failed to load user details</div>;
   if (isLoading) return <div>Loading...</div>;
+  const reaction = !expression || expression === "Like" ? "👍🏻" : expression;
   return (
     <Flex direction={"row"} textAlign={"left"} p={1}>
       <Avatar image={profile.imageBlob} size={"sm"} />
@@ -17,7 +18,7 @@ export default function Voter({ profileId }) {
         fontSize={16}
         href={`/profile/${encodeURIComponent(profile.id)}`}
       >
-        {profile.name}
+        {profile.name} {reaction}
       </Link>
     </Flex>
   );
