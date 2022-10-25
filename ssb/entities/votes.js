@@ -51,6 +51,7 @@ module.exports = {
             vote: {
               link: msgId,
               value: 1,
+              expression: "👍🏻",
             },
           },
           (err, kvt) => {
