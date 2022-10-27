@@ -70,5 +70,4 @@ As of 2022-10-27, the following are mutually-compatible, actively used and maint
 - [Patchfox](https://patchfox.org/) (Firefox/WebExtension)
 - [Patchwork](https://ahdinosaur.github.io/patchwork-downloader/) (Windows, macOS, Linux)
 - [Planetary.social](https://www.planetary.social/) (iOS)
-- [Perihelion](https://github.com/nsantini/perihelion) (Node.js/Web)
 - [Patchfoo](https://git.scuttlebot.io/%25YAg1hicat%2B2GELjE2QJzDwlAWcx0ML%2B1sXEdsWwvdt8%3D.sha256)
