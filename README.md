@@ -60,3 +60,15 @@ Note that this setup uses Caddy with only local certs so you'll have to bypass t
 - Build production site: `docker-compose run --rm app npm run build`
 - Run app: `docker-compose up app -d`
 - Access the app at `https://perihelion.lvh.me/`
+
+# Other SSB apps
+
+You may find other SSB clients/applications preferable to, or complementary to, patchfoo.
+As of 2022-10-27, the following are mutually-compatible, actively used and maintained FLOSS ([Free/libre and open-source software][FLOSS]) SSB applications, of various architectures:
+
+- [Manyverse](https://www.manyver.se/) (Android, iOS)
+- [Patchfox](https://patchfox.org/) (Firefox/WebExtension)
+- [Patchwork](https://ahdinosaur.github.io/patchwork-downloader/) (Windows, macOS, Linux)
+- [Planetary.social](https://www.planetary.social/) (iOS)
+- [Perihelion](https://github.com/nsantini/perihelion) (Node.js/Web)
+- [Patchfoo](https://git.scuttlebot.io/%25YAg1hicat%2B2GELjE2QJzDwlAWcx0ML%2B1sXEdsWwvdt8%3D.sha256)
