@@ -11,7 +11,7 @@ const collector = (ssb, resolve, reject) => {
         await Promise.all(
           collectedThreads.map(async (thread) => {
             thread.messages = thread.messages || [];
-            const replyCount = thread.messages.length;
+            const replyCount = thread.messages.length - 1;
             thread.messages.slice(0, 1);
             const messages = await Promise.all(
               thread.messages.map(async (message) => {
