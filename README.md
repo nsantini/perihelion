@@ -1,5 +1,7 @@
 # Perihelion
 
+![perihelion logo](./Perihelion.jpg "Perihelion")
+
 This is a simple web-app built on top of [SSB](https://scuttlebutt.nz/). For dev documentation visit the [Scuttlebutt Treasure Map for Developers](https://dev.scuttlebutt.nz/#/)
 
 The purpose I had to build it is to learn, and to create a web client that I can eventually host and access from multiple devices.
