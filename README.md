@@ -65,8 +65,8 @@ Note that this setup uses Caddy with only local certs so you'll have to bypass t
 
 # Other SSB apps
 
-You may find other SSB clients/applications preferable to, or complementary to, patchfoo.
-As of 2022-10-27, the following are mutually-compatible, actively used and maintained FLOSS ([Free/libre and open-source software][FLOSS]) SSB applications, of various architectures:
+You may find other SSB clients/applications preferable to, or complementary to, Perihelion.
+As of 2022-10-27, the following are mutually-compatible, actively used and maintained FLOSS (Free/libre and open-source software) SSB applications, of various architectures:
 
 - [Manyverse](https://www.manyver.se/) (Android, iOS)
 - [Patchfox](https://patchfox.org/) (Firefox/WebExtension)
