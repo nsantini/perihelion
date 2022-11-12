@@ -1,7 +1,16 @@
-import { Link, Text, useColorModeValue } from "@chakra-ui/react";
+import {
+  Link,
+  Text,
+  useColorModeValue,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverBody,
+} from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
 import Media from "./media";
+import Profile from "../organisms/profile";
 
 const toUrl = (ref, blob) => {
   switch (ref[0]) {
@@ -24,6 +33,22 @@ const createSsbTheme = (blobs) => {
   return {
     a: (props) => {
       const { children, href } = props;
+      if (href[0] === '@') {
+        return (
+          <Popover trigger="hover">
+            <PopoverTrigger>
+              <Link href={toUrl(href)} textDecoration="underline">
+                {children}
+              </Link>
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverBody>
+                <Profile feedId={href} short={true} />
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+        );
+      }
       return (
         <Link href={toUrl(href)} textDecoration="underline">
           {children}
