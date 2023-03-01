@@ -17,7 +17,7 @@
     "mime": "^3.0.0",
     "multiparty": "^4.2.3",
     "multiserver-address": "^1.0.1",
-    "next": "latest",
+    "next": "12.1.2",
     "next-connect": "^0.12.2",
     "pull-file": "^1.1.0",
     "pull-stream": "^3.6.14",
